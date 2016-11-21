@@ -16,23 +16,18 @@ class PopupForPostDetailsComponent extends React.Component {
 	
 	render () {
 
-		let {postInfo, postedByInfo, showModal, closeModal} = this.props;
+		let {showModal, closeModal} = this.props;
+
 
 		return (
 
 			<div>
 				<Modal show={showModal} onHide={closeModal}>
 		          <Modal.Header closeButton>
-		            <Modal.Title>Modal heading</Modal.Title>
+		            <Modal.Title>{this.props.postDetails.title}</Modal.Title>
 		          </Modal.Header>
 		          <Modal.Body>
-		            
-
-		            <h4>Overflowing text to show scroll behavior</h4>
-		            <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-		            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-		            <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-		            <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+		          	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.  	
 		          </Modal.Body>
 		          <Modal.Footer>
 		            <Button onClick={closeModal}>Close</Button>

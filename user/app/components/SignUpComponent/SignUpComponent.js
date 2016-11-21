@@ -11,6 +11,9 @@ class SignUpComponent extends React.Component {
 		super(props);
 		this._handleKeyPress = this._handleKeyPress.bind(this);
 		this.onClickOfSignUButton = this.onClickOfSignUButton.bind(this);
+		this.state = {
+			checked: "PERSON"
+		}
 
 	}
 
@@ -19,6 +22,13 @@ class SignUpComponent extends React.Component {
 		if (e.key === 'Enter') {
 			this.onClickOfSignUButton();
 		}
+	}
+
+	onClickTypeChangeHandler (e) {
+
+		this.setState({
+			checked : e.target.value
+		})
 	}
 	
 	onClickOfSignUButton () {
@@ -75,42 +85,88 @@ class SignUpComponent extends React.Component {
 		
 		this.props.signUp({
 
-			username : this.usernameRefSave.value,
-			password : this.passwordRefSave.value
+			email : this.usernameRefSave.value,
+			password : this.passwordRefSave.value,
+			name : this.nameRefSave.value,
+			type : this.state.checked
 		});
 		
 	}
 
 	render () {
 		return (
+
 			<div  className = 'col-md-12'>
-				<div>
 
-					<strong>Username</strong>:  <input type='text' 
-					ref = {(ref) => this.usernameRefSave = ref} 
-					onKeyPress = {this._handleKeyPress} />
-				</div>
-				<div>
-					<strong>Password</strong>:  <input type ='password' 
-					 ref = {(ref) => this.passwordRefSave = ref}
-				 	onKeyPress = {this._handleKeyPress} />
-				</div>
+				<div className = 'col-xs-6 text-right'>
+					<div styleName = 'label'>
 
-				<div>
-					<strong>Re-Enter Password</strong>:  <input type ='password' 
-					 ref = {(ref) => this.passwordCopyRefSave = ref}
-				 	onKeyPress = {this._handleKeyPress} />
+						<strong>Email</strong>:
+					</div>
+					<div styleName = 'label'>
+
+						<strong>Name</strong>:
+					</div>
+					<div styleName = 'label'>
+
+						<strong>Password</strong>:
+					</div>
+					<div styleName = 'label'>
+
+						<strong>Re-Enter Password</strong>:
+					</div>
+					<div styleName = 'label'>
+
+						<strong>Are you an organization?</strong>:
+					</div>
+
 				</div>
-				 <input type = 'button' onClick = {this.onClickOfSignUButton}
+				<div className = 'col-xs-6'>
+
+					<div>
+
+					  <input type='text' 
+						ref = {(ref) => this.usernameRefSave = ref} 
+						onKeyPress = {this._handleKeyPress} />
+					</div>
+
+					<div>
+						  <input type ='text' 
+						 	ref = {(ref) => this.nameRefSave = ref}
+					 		onKeyPress = {this._handleKeyPress} />
+					</div>
+					
+					<div>
+						  <input type ='password' 
+						 	ref = {(ref) => this.passwordRefSave = ref}
+					 		onKeyPress = {this._handleKeyPress} />
+					</div>
+					<div>
+						  <input type ='password' 
+						 	ref = {(ref) => this.passwordCopyRefSave = ref}
+					 		onKeyPress = {this._handleKeyPress} />
+					</div>
+					<div>
+						<input type="radio" name="typeOfSignUp" 
+                                   value="PERSON" 
+                                   checked= {this.state.checked == 'PERSON'}
+                                   onChange = {(e)=> this.onClickTypeChangeHandler(e)}
+                                   />No
+                        <input type="radio" name="typeOfSignUp" 
+                                   value="ORGANIZATION"
+                                   checked= {this.state.checked == 'ORGANIZATION'}
+                                   onChange = {(e) => this.onClickTypeChangeHandler(e)}
+                                    />Yes
+					</div>
+				</div>
+				<div styleName = 'buttons' className = 'col-xs-12 text-center'>
+					<input type = 'button' onClick = {this.onClickOfSignUButton}
 				  className = 'btn btn-primary' value = 'Sign Up' />
-				  <br/>
-				  <br/>
 
-				  <input type = 'button' onClick = {()=> hashHistory.push('login')}
+					<input type = 'button' onClick = {()=> hashHistory.push('login')}
 				  className = 'btn btn-primary' value = 'Already a User' />
-
+				</div>
 			</div>
-
 
 
 			);

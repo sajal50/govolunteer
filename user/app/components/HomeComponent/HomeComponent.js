@@ -25,6 +25,15 @@ class HomeComponent extends React.Component {
 		return this.componentHash[this.props.params.childRoute];
 	}
 
+	getPropsToBePassed () {
+
+		switch (this.props.params.childRoute) {
+
+			case 'search' : return {searchProps: this.props.searchProps, searchActions:this.props.searchActions};
+							break;
+		}
+	}
+
 	render () {
 
 		let {isLoggedInChecked} = this.props.userInfo;
@@ -34,6 +43,7 @@ class HomeComponent extends React.Component {
 		}
 		else {
 			let ComponentToBeLoaded = this.getComponentToBeLoaded();
+			let propsToBePassed = this.getPropsToBePassed();
 			return (
 
 				<div>
@@ -42,7 +52,7 @@ class HomeComponent extends React.Component {
 					</div>
 					
 					<div className = 'col-xs-9'>
-						<ComponentToBeLoaded />
+						<ComponentToBeLoaded {...propsToBePassed}/>
 						
 					</div>
 

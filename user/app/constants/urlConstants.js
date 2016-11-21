@@ -7,7 +7,11 @@ let urlConstants = () => {
 
 		"login" : baseUrl + 'login',
 		"init" : baseUrl + 'getsession',
-		"logout" : baseUrl + 'logout'
+		"signUp" : baseUrl + 'signup',
+		"logout" : baseUrl + 'logout',
+		"categories" : baseUrl + 'categories',
+		"locations" : baseUrl + 'locations',
+		"search" : baseUrl + 'search'
 	};
 
 

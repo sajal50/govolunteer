@@ -69,7 +69,7 @@ export function checkInit () {
 
 
 
-export function login (username, password) {
+export function login (email, password) {
 
 
 	return function (dispatch, getState) {
@@ -82,7 +82,7 @@ export function login (username, password) {
 				headers: {
 					'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
 				},
-				body: serialize({userName : username, password})
+				body: serialize({email, password})
 			}).then((response) => {
 				return response.json();
 			}).then((json)=> {
@@ -100,7 +100,7 @@ export function login (username, password) {
 						payload: json
 					});
 
-					hashHistory.push('home');
+					hashHistory.push('home/search');
 
 
 
@@ -131,13 +131,6 @@ export function login (username, password) {
 	};
 
 
-}
-
-
-function checkAndDispatchIfFieldsEmptyForSignUp (payload, dispatch) {
-
-
-	
 }
 
 export function signUp (payload)  {
@@ -175,12 +168,12 @@ export function signUp (payload)  {
 					payload: json
 				});
 
-				hashHistory.push('home');
+				hashHistory.push('home/search');
 
 
 
 			} else {
-				if (json.error = "USERNAME_TAKEN") {
+				if (json.error == "USERNAME_TAKEN") {
 					dispatch(triggerNotification({
 
 						"level" : "error",

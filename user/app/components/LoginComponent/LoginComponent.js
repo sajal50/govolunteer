@@ -92,7 +92,7 @@ class LoginComponent extends React.Component {
 				<div className = 'col-xs-6 text-right'>
 					<div>
 
-						<strong>Username</strong>:
+						<strong>Email</strong>:
 					</div>
 					<div>
 

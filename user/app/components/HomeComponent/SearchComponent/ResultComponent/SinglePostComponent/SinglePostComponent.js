@@ -14,14 +14,14 @@ class SinglePostComponent extends React.Component {
 	}
 	onClickPostHandler() {
 
-		this.props.openModal();
+		this.props.openModal(this.props.postDetails.pid);
 	}
 	render () {
-
+		let {title} = this.props.postDetails;
 		return (
 
 			<div onClick = {()=> this.onClickPostHandler()} styleName = 'single-post'>
-				Single Post
+				{title}
 			</div>
 
 

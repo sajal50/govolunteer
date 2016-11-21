@@ -14,7 +14,15 @@ let initialState = () => {
 			level : null,
 			message : null
 
-		}
+		},
+		categories: [],
+		locations: [],
+		flags : {
+
+			isCategoryFetched:false,
+			isLocationFetched :false
+		},
+		posts: []
 
 	};
 

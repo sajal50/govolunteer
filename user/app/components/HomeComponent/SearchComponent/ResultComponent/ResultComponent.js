@@ -10,69 +10,8 @@ class ResultComponent extends React.Component {
 
 		super(props);
 		this.state = {
-
-			posts : [{
-
-				"pid" : 1,
-			  	"title" : "ABCD",
-			  	"startDate" : "1/11/2011",
-			  	"endDate": "1/11/2011",
-			  	"location" : "Mumbai",
-			  	"lookingFor" : "PERSON",
-			  	"categories" : [{
-			  
-				  	"cid" : "1",
-				    "categoryName" : "Cat1"
-			  	}],
-			  	"timestamp" : "1/11/2011" ,
-			  
-				postedby : {
-
-				  	"email" : "sajal50@gmail.com"
-				  }
-			  
-			},{
-
-				"pid" : 2,
-			  	"title" : "ABCD2",
-			  	"startDate" : "1/11/2011",
-			  	"endDate": "1/11/2011",
-			  	"location" : "Mumbai",
-			  	"lookingFor" : "PERSON",
-			  	"categories" : [{
-			  
-				  	"cid" : "1",
-				    "categoryName" : "Cat1"
-			  	}],
-			  	"timestamp" : "1/11/2011" ,
-			  
-				postedby : {
-
-				  	"email" : "sajal50@gmail.com"
-				  }
-			  
-			},{
-
-				"pid" : 3,
-			  	"title" : "ABCD3",
-			  	"startDate" : "1/11/2011",
-			  	"endDate": "1/11/2011",
-			  	"location" : "Mumbai",
-			  	"lookingFor" : "PERSON",
-			  	"categories" : [{
-			  
-				  	"cid" : "1",
-				    "categoryName" : "Cat1"
-			  	}],
-			  	"timestamp" : "1/11/2011" ,
-			  
-				postedby : {
-
-				  	"email" : "sajal50@gmail.com"
-				  }
-			  
-			}],
-			showModal : false
+			showModal : false,
+			currentPopupProps:{}
 		};
 		this.closeModal = this.closeModal.bind(this);
 		this.openModal = this.openModal.bind(this);
@@ -84,12 +23,23 @@ class ResultComponent extends React.Component {
 	}
 
 	openModal (id) {
-		console.log(id);
-		this.setState({showModal:true});
+
+		let currentPopupPostIndex = _.findIndex(this.props.posts, (singlePost) => {
+
+			return singlePost.pid == id;
+
+		});
+
+		this.setState({
+
+			currentPopupProps:this.props.posts[currentPopupPostIndex],
+			showModal:true
+
+		});
 
 	}
 	getPostsToBeDisplayed () {
-		let {posts} = this.state;
+		let {posts} = this.props;
 		
 		return posts.map((singlePost) => {
 			
@@ -106,7 +56,8 @@ class ResultComponent extends React.Component {
 
 			<div>
 				{postsToBeDisplayed}
-				<PopupForPostDetailsComponent 
+				<PopupForPostDetailsComponent
+				postDetails = {this.state.currentPopupProps}
 				showModal = {this.state.showModal}
 				closeModal = {this.closeModal} />
 			</div>

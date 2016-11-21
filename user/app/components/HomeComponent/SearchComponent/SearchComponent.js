@@ -11,17 +11,23 @@ class SearchComponent extends React.Component {
 		super(props);
 		
 	}
+	componentWillMount () {
+		let {searchActions} = this.props;
+		searchActions.fetchCategories();
+		searchActions.fetchLocations();
+	}
 	render () {
 
+		let {searchProps, searchActions} = this.props;
 		return (
 
 			<div>
 				
 				<div>
-					<SearchbarComponent />
+					<SearchbarComponent {...searchActions} {...searchProps} />
 				</div>
 				<div>
-					<ResultComponent />
+					<ResultComponent posts = {searchProps.posts} />
 				</div>
 			</div>
 
