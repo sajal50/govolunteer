@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import HomeComponent from '../../components/HomeComponent/HomeComponent.js';
+import OrganizationComponent from '../../components/OrganizationComponent/OrganizationComponent.js';
 import {fetchCategories, fetchLocations, search} from '../../actions/searchActions.js';
 
 const mapStateToProps = (state) => {
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationComponent);

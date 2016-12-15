@@ -6,7 +6,8 @@ let initialState = () => {
 
 			"email" : null,
 			"isLoggedIn" : false,
-			"isLoggedInChecked" : false
+			"isLoggedInChecked" : false,
+			"type" : null
 		},
 		"notifConfig" : {
 			
@@ -21,9 +22,7 @@ let initialState = () => {
 
 			isCategoryFetched:false,
 			isLocationFetched :false
-		},
-		posts: []
-
+		}
 	};
 
 };

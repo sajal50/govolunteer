@@ -100,7 +100,8 @@ export function login (email, password) {
 						payload: json
 					});
 
-					hashHistory.push('home/search');
+					redirectAccordingToRole (json.type);
+
 
 
 
@@ -131,6 +132,14 @@ export function login (email, password) {
 	};
 
 
+}
+
+function redirectAccordingToRole (type) {
+	if (type == 'PERSON') {
+		hashHistory.push('user/');	
+	} else {
+		hashHistory.push ('org/events');
+	}
 }
 
 export function signUp (payload)  {
@@ -168,7 +177,7 @@ export function signUp (payload)  {
 					payload: json
 				});
 
-				hashHistory.push('home/search');
+				redirectAccordingToRole(json.type);
 
 
 

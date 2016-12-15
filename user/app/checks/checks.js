@@ -12,9 +12,12 @@ export function loginCheck () {
 			case 'SESSION_DOES_NOT_EXIST' : 
 			case 'USER_NOT_LOGGED_IN' : 
 										break;
-			case 'USER_LOGGED_IN' : hashHistory.push('home/search');
+			case 'USER_LOGGED_IN' : 
+			if (store.getState().userInfo.type == 'ORGANIZATION') {
 
+				hashHistory.push('org/events');
 
+			}
 		}
 
 	});
@@ -23,7 +26,7 @@ export function loginCheck () {
 }
 
 
-export function homeCheck () {
+export function orgCheck () {
 
 	store.dispatch(checkInit())
 	.then((response) => {

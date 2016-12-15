@@ -1,19 +1,17 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import HomeComponentStyles from './assets/HomeComponent.scss';
+import OrganizationComponentStyles from './assets/OrganizationComponent.scss';
 import NotificationSystem from 'react-notification-system';
-//import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import SidebarComponent from './SidebarComponent/SidebarComponent.js';
-import SearchComponent from './SearchComponent/SearchComponent.js';
 import AccountSettingsComponent from './AccountSettingsComponent/AccountSettingsComponent.js';
 
-class HomeComponent extends React.Component {
+class OrganizationComponent extends React.Component {
 
 	constructor (props) {
 
 		super(props);
 		this.componentHash = {
-			'search' : SearchComponent,
+			'events' : SearchComponent,
 			'accountsettings' : AccountSettingsComponent
 		};
 		
@@ -29,7 +27,7 @@ class HomeComponent extends React.Component {
 
 		switch (this.props.params.childRoute) {
 
-			case 'search' : return {searchProps: this.props.searchProps, searchActions:this.props.searchActions};
+			case 'events' : return {searchProps: this.props.searchProps, searchActions:this.props.searchActions};
 							break;
 		}
 	}
@@ -52,7 +50,8 @@ class HomeComponent extends React.Component {
 					</div>
 					
 					<div className = 'col-xs-9'>
-						<ComponentToBeLoaded {...propsToBePassed}/>
+
+						Event Component
 						
 					</div>
 
@@ -68,4 +67,4 @@ class HomeComponent extends React.Component {
 	}
 }
 
-export default CSSModules(HomeComponent, HomeComponentStyles);
+export default CSSModules(OrganizationComponent, OrganizationComponentStyles);

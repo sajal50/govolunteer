@@ -14,28 +14,34 @@ class SidebarComponent extends React.Component {
 
 	
 	
-	onClickSearch () {
+	onClickEvents () {
 		
-		hashHistory.push('home/search');
+		hashHistory.push('org/events');
 
 	}
 
 	onClickAccountSettings () {
 
-		hashHistory.push('home/accountsettings');
+		hashHistory.push('org/accountsettings');
 
 
+	}
+	onClickNotifications () {
+		console.log('clicked');
 	}
 	render () {
 
 		return (
 
 			<div>
-				<div onClick = {()=> this.onClickSearch()} >
-					Search
+				<div onClick = {()=> this.onClickEvents()} >
+					Events
 				</div>
 				<div onClick = {()=> this.onClickAccountSettings()}>
 					Account Settings
+				</div>
+				<div onClick = {()=> this.onClickNotifications()}>
+					Notifications
 				</div>
 
 			</div>

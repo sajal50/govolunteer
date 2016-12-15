@@ -4,7 +4,6 @@ import notifConfig from './notifConfig/notifConfig.js';
 import flags from './flags/flags.js';
 import categories from './categories/categories.js';
 import locations from './locations/locations.js';
-import posts from './posts/posts.js';
 
 export default combineReducers({
 
@@ -12,8 +11,7 @@ export default combineReducers({
 	notifConfig,
 	flags,
 	categories,
-	locations,
-	posts
+	locations
 
 });
 
