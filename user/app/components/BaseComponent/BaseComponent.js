@@ -11,6 +11,11 @@ class BaseComponent extends React.Component {
 		super(props);
 		
 	}
+	componentWillMount () {
+
+		this.props.fetchCategories();
+		this.props.fetchLocations();
+	}
 
 	
 	componentWillReceiveProps (nextProps) {
