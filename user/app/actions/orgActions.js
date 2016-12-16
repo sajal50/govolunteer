@@ -38,3 +38,14 @@ export function fetchEvents () {
 
 
 }
+
+export function createNewEvent (payload) {
+
+	return function (dispatch, getState) {
+
+		console.log(payload);
+	}
+
+
+
+}

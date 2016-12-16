@@ -34,7 +34,7 @@ class OrganizationComponent extends React.Component {
 			break;
 			
 			case 'new-event' :  
-			return {}
+			return {newEventActions : this.props.newEventActions, org: this.props.org, metadata:this.props.metadata}
 			break;
 			
 			default : return {};

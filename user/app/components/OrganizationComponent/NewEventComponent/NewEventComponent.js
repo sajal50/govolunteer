@@ -1,6 +1,7 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import NewEventComponentStyle from './assets/NewEventComponent.scss';
+import NewEventFormComponent from './NewEventFormComponent/NewEventFormComponent.js';
 
 
 class NewEventComponent extends React.Component {
@@ -16,11 +17,21 @@ class NewEventComponent extends React.Component {
 
 	render () {
 
-		return (
+		let {newEventScreenType} = this.props.org.flags;
+
+		if (newEventScreenType == 'FORM') {
+			return (
 			<div>
-				This is the NewEventComponent
+				<NewEventFormComponent newEventActions = {this.props.newEventActions} metadata = {this.props.metadata}/>
 			</div>
 			);
+		} else {
+			return (
+			<div>
+				This is the result page.
+			</div>
+			);
+		}
 	}
 }
 

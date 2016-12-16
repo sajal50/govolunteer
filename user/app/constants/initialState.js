@@ -27,7 +27,7 @@ let initialState = () => {
 
 			events : [],
 			flags : {
-				
+				'newEventScreenType' : 'FORM'
 			}
 		}
 

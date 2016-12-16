@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import OrganizationComponent from '../../components/OrganizationComponent/OrganizationComponent.js';
-import {fetchEvents} from '../../actions/orgActions.js';
+import {fetchEvents, createNewEvent} from '../../actions/orgActions.js';
+
 
 
 const mapStateToProps = (state) => {
@@ -26,6 +27,15 @@ const mapDispatchToProps = (dispatch) => {
 			}
 
 
+		},
+
+		newEventActions : {
+
+			createNewEvent : (payload) => {
+
+				dispatch(createNewEvent(payload));
+			}
+			
 		}
 
 	};
