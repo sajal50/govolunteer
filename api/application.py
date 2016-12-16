@@ -115,49 +115,53 @@ def searchbyfilter():
        return jsonify({'task': category}), 201
    except Exception as e:
        return json.dumps({'message':'Error'})
+
+
+@app.route('/api/userpost', methods=['POST'])
+def userpost():
+   try:
+       if not request.json or not 'userId' in request.json:
+            return json.dumps({'message':'Error'})
+       conn=mysql.connect()
+       dbcursor = conn.cursor();
+       dbcursor.callproc('sp_createUserPost',(content['userId'],content['Title'],content['Descr'],content['StartDate'],content['EndDate'],content['Tstmp'],content['CityId'],content['Category']))
+       data = dbcursor.fetchall()
+        if len(data) is 0:
+            conn.commit()
+            return json.dumps({'message':'Post created successfully!'})
+        else:
+            return json.dumps({'message':str(data[0])})
+   except Exception as e:
+       return json.dumps({'message':'Error'})
+
+@app.route('/api/event', methods=['POST'])
+def newevent():
+   try:
+       if not request.json or not 'EmailId' in request.json and not 'password' in request.json:
+            return json.dumps({'message':'Error'})
+       content = request.get_json(silent=True);
+       activities=
+       conn=mysql.connect()
+       dbcursor = conn.cursor();
+       dbcursor.callproc('sp_createEvent',(content['userId'],content['title'],content['description'],content['starttime'],content['endtime']))
+       data = dbcursor.fetchall()
+       if len(data) is 0:
+          conn.commit()
+          return json.dumps({'message':'Event created successfully!'})
+       else:
+          return json.dumps({'message':str(data[0])})
+       activities=content['activties']
+       for activity in activities:
+         activity.eventid=data;
+
+       dbcursor.callproc('sp_createActivities',activities)
+       data = dbcursor.fetchall()
+       content['activites']=data
+       return json.dumps(content);
+       
+   except Exception as e:
+       return json.dumps({'message':'Error'})
     
-"""
-@app.route('/api/authz/signin', methods=['GET'])
-def signin():
-
-    try:
-        if not request.json or not 'title' in request.json:
-        abort(400)
-        _hashed_password = generate_password_hash(_password)
-        return jsonify({'task': task}), 201
-    except Exception as e:
-        pass
-
-@app.route('/api/authz/init', methods=['GET'])
-def initialize():
-
-    try:
-        if not request.json or not 'title' in request.json:
-        abort(400)
-        return jsonify({'task': task}), 201
-    except Exception as e:
-        pass
-
-@app.route('/api/authz/logout', methods=['GET'])
-def logout():
-
-    try:
-        if not request.json or not 'title' in request.json:
-        abort(400)
-        return jsonify({'task': task}), 201
-    except Exception as e:
-        pass
-
-@app.route('/api/authz/logout', methods=['GET'])
-def signup():
-
-    try:
-        if not request.json or not 'title' in request.json:
-        abort(400)
-        return jsonify({'task': task}), 201
-    except Exception as e:
-        pass
-"""
 
 if __name__ == "__main__":
     app.run(debug=True)
