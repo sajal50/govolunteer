@@ -139,32 +139,54 @@ def userpost():
 @app.route('/api/event', methods=['POST'])
 def newevent():
    try:
-       if not request.json:
-            return json.dumps({'message':'Error'})
        content = request.get_json(silent=True);
        #activities=content['activities']
        conn=mysql.connect()
        dbcursor = conn.cursor();
-       dbcursor.callproc('sp_createEvent',(content['userId'],content['Title'],content['Description'],content['StartDate'],content['EndDate'],0))
+       
+       dbcursor.callproc('sp_createEvent',(1,content['title'],content['description'],content['startDate'],content['endDate'],0))
+
        dbcursor.execute('SELECT @_sp_createEvent_5') 
        result = dbcursor.fetchone()
        if result[0] != 0:
-          conn.commit()
-          return json.dumps({'message':'Event created successfully with id:'+str(result[0])})
+            pass
+          #conn.commit()
        else:
           return json.dumps({'message':str(result)})
-       '''activities=content['activties']
+       eventid=result[0]
+       activities=content['activities']
        for activity in activities:
-         activity.eventid=data;
-
-       dbcursor.callproc('sp_createActivities',activities)
-       data = dbcursor.fetchall()
-       content['activites']=data
-       return json.dumps(content);'''
-       
+            #return json.dumps(activity)
+            dbcursor.callproc('sp_getFeasibleUser',(activity['categoryId'],activity['startTime'],activity['endTime'],activity['cityid']))
+            data1 = dbcursor.fetchall()
+            if len(data1) is 0:
+                return json.dumps({'message':'User does not exist'})
+            user=modeluser(data1)
+            activity['user']=user;
+            #return json.dumps(activity['user']['uid'])
+            userids=activity['user']['uid']
+            #return json.dumps(userids)
+            dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,activity['cityid'],0))
+            dbcursor.execute('SELECT @_sp_createActivity_8')
+            result2 = dbcursor.fetchone()
+            if result2[0] != 0:
+                activity['activityid']=result2[0]
+            else:
+                return json.dumps({'message':str(result2)})
+       content['activities']=activities
+       return json.dumps(content)
    except Exception as e:
-       return json.dumps({'message':'Error'})
-    
+       return json.dumps({'message':'Error1'})
 
+def modeluser(usercred):
+    i = {
+                    'uid':1,
+                    'username':usercred[0][0],
+                    'emailid':usercred[0][1],
+                    'pic':usercred[0][2],
+                    'UserType':usercred[0][3],'Description':usercred[0][4],'City':usercred[0][5]
+
+                }
+    return i;
 if __name__ == "__main__":
     app.run(debug=True)
