@@ -9,8 +9,7 @@ let urlConstants = () => {
 		"init" : baseUrl + 'getsession',
 		"signUp" : baseUrl + 'signup',
 		"logout" : baseUrl + 'logout',
-		"categories" : baseUrl + 'categories',
-		"locations" : baseUrl + 'locations',
+		"metadata" : baseUrl + 'metadata',
 		"event" : baseUrl + 'event'
 	};
 

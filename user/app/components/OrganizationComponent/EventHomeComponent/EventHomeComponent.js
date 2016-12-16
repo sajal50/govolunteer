@@ -4,6 +4,7 @@ import EventHomeComponentStyle from './assets/EventHomeComponent.scss';
 import AllEventsListComponent from './AllEventsListComponent/AllEventsListComponent.js';
 import SingleEventDetailComponent from './SingleEventDetailComponent/SingleEventDetailComponent.js';
 import _ from 'lodash';
+import {hashHistory} from 'react-router';
 
 
 class EventHomeComponent extends React.Component {
@@ -36,14 +37,21 @@ class EventHomeComponent extends React.Component {
 		//TODO - LOADING.. WILL COME while the events are being fetched.
 		return (
 			<div>
-				<div className = 'col-xs-4' >
-					<AllEventsListComponent selectEvent = {this.selectEvent} events = {events} />
-
+				<div>
+					<input onClick = {() => hashHistory.push('org/new-event')} className = 'btn btn-success'
+					 type = 'button' value = 'New Event' />
 				</div>
+				<br/>
+				<div>
+					<div className = 'col-xs-4' >
+						<AllEventsListComponent selectEvent = {this.selectEvent} events = {events} />
 
-				<div className = 'col-xs-8' >
+					</div>
 
-					<SingleEventDetailComponent eventSelected = {this.state.eventSelected} />
+					<div className = 'col-xs-8' >
+
+						<SingleEventDetailComponent eventSelected = {this.state.eventSelected} />
+					</div>
 				</div>
 
 			</div>

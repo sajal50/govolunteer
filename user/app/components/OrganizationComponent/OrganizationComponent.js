@@ -4,6 +4,7 @@ import OrganizationComponentStyles from './assets/OrganizationComponent.scss';
 import SidebarComponent from './SidebarComponent/SidebarComponent.js';
 import AccountSettingsComponent from './AccountSettingsComponent/AccountSettingsComponent.js';
 import EventHomeComponent from './EventHomeComponent/EventHomeComponent.js';
+import NewEventComponent from './NewEventComponent/NewEventComponent.js';
 
 class OrganizationComponent extends React.Component {
 
@@ -12,7 +13,8 @@ class OrganizationComponent extends React.Component {
 		super(props);
 		this.componentHash = {
 			'events' : EventHomeComponent,
-			'accountsettings' : AccountSettingsComponent
+			'accountsettings' : AccountSettingsComponent,
+			'new-event' : NewEventComponent
 		};
 		
 	}
@@ -27,8 +29,15 @@ class OrganizationComponent extends React.Component {
 
 		switch (this.props.params.childRoute) {
 
-			case 'events' : return {eventActions: this.props.eventActions, org: this.props.org};
-							break;
+			case 'events' : 
+			return {eventActions: this.props.eventActions, org: this.props.org};
+			break;
+			
+			case 'new-event' :  
+			return {}
+			break;
+			
+			default : return {};
 		}
 	}
 

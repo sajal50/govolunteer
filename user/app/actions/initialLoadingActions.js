@@ -4,6 +4,7 @@ import actionConstants from '../constants/actionConstants.js';
 import {hashHistory} from 'react-router';
 import {triggerNotification} from './notificationActions.js';
 import {kfetch} from '../util/util.js';
+import {setFlags} from './flagActions.js';
 
 
 export function checkInit () {
@@ -232,16 +233,16 @@ export function logout () {
 	}
 }
 
-export function fetchCategories () {
+export function fetchMetadata () {
 
 	return function (dispatch, getState) {
 
-		let {isCategoryFetched} = getState().flags;
+		let {isMetadataFetched} = getState().flags;
 
-		if (!isCategoryFetched) {
+		if (!isMetadataFetched) {
 
 
-			kfetch(urlConstants.categories)
+			kfetch(urlConstants.metadata)
 			.then((response) => {
 
 				return response.json();
@@ -250,54 +251,18 @@ export function fetchCategories () {
 				if (!json.error) {
 
 					dispatch(setFlags({
-						isCategoryFetched: true
+						isMetadataFetched: true
 					}));
 
 					dispatch ({
 						type : actionConstants.SET_CATEGORIES,
-						payload : json
-					})
-				}
-
-
-
-			}).catch(() => {
-				
-			});
-		}
-
-
-	};
-
-
-
-}
-
-export function fetchLocations  () {
-
-	return function (dispatch, getState) {
-
-		let {isLocationFetched} = getState().flags;
-
-		if (!isLocationFetched) {
-
-
-			kfetch(urlConstants.locations)
-			.then((response) => {
-
-				return response.json();
-			}).then((json)=> {
-
-				if (!json.error) {
-
-					dispatch(setFlags({
-						isLocationFetched: true
-					}));
-
+						payload : json.categories
+					});
 					dispatch ({
 						type : actionConstants.SET_LOCATIONS,
-						payload : json
-					})
+						payload : json.locations
+					});
+
 				}
 
 
@@ -313,3 +278,4 @@ export function fetchLocations  () {
 
 
 }
+

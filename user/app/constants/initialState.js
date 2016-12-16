@@ -25,7 +25,10 @@ let initialState = () => {
 		},
 		org : {
 
-			events : []
+			events : [],
+			flags : {
+				
+			}
 		}
 
 	};

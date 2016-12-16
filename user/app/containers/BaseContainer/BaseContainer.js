@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import BaseComponent from '../../components/BaseComponent/BaseComponent.js';
-import {logout, fetchCategories, fetchLocations} from '../../actions/initialLoadingActions.js';
+import {logout, fetchMetadata} from '../../actions/initialLoadingActions.js';
 
 const mapStateToProps = (state) => {
 	return {
@@ -19,11 +19,8 @@ const mapDispatchToProps = (dispatch) => {
 
 
 		},
-		fetchCategories: () => {
-				dispatch(fetchCategories());
-		},
-		fetchLocations: () => {
-				dispatch (fetchLocations());
+		fetchMetadata: () => {
+				dispatch(fetchMetadata());
 		}
 
 	};

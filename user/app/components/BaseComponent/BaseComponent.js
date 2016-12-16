@@ -13,8 +13,7 @@ class BaseComponent extends React.Component {
 	}
 	componentWillMount () {
 
-		this.props.fetchCategories();
-		this.props.fetchLocations();
+		this.props.fetchMetadata();
 	}
 
 	
