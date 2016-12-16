@@ -120,44 +120,47 @@ def searchbyfilter():
 @app.route('/api/userpost', methods=['POST'])
 def userpost():
    try:
-       if not request.json or not 'userId' in request.json:
-            return json.dumps({'message':'Error'})
-       conn=mysql.connect()
-       dbcursor = conn.cursor();
-       dbcursor.callproc('sp_createUserPost',(content['userId'],content['Title'],content['Descr'],content['StartDate'],content['EndDate'],content['Tstmp'],content['CityId'],content['Category']))
-       data = dbcursor.fetchall()
-        if len(data) is 0:
-            conn.commit()
-            return json.dumps({'message':'Post created successfully!'})
-        else:
-            return json.dumps({'message':str(data[0])})
+    if not request.json or not 'userId' in request.json:
+        return json.dumps({'message':'Error'})
+    content=request.get_json(silent=True);
+    #return json.dumps(content)
+    conn=mysql.connect()
+    dbcursor = conn.cursor();
+    dbcursor.callproc('sp_createPost',(content['userId'],content['Title'],content['Description'],content['StartDate'],content['EndDate'],content['Tstamp'],content['CityId'],content['Category']))
+    data = dbcursor.fetchall()
+    if len(data) is 0:
+        conn.commit()
+        return json.dumps({'message':'Post created successfully!'})
+    else:
+        return json.dumps({'message':str(data[0])})
    except Exception as e:
-       return json.dumps({'message':'Error'})
+        return json.dumps({'message':'Error1'})
 
 @app.route('/api/event', methods=['POST'])
 def newevent():
    try:
-       if not request.json or not 'EmailId' in request.json and not 'password' in request.json:
+       if not request.json:
             return json.dumps({'message':'Error'})
        content = request.get_json(silent=True);
-       activities=
+       #activities=content['activities']
        conn=mysql.connect()
        dbcursor = conn.cursor();
-       dbcursor.callproc('sp_createEvent',(content['userId'],content['title'],content['description'],content['starttime'],content['endtime']))
-       data = dbcursor.fetchall()
-       if len(data) is 0:
+       dbcursor.callproc('sp_createEvent',(content['userId'],content['Title'],content['Description'],content['StartDate'],content['EndDate'],0))
+       dbcursor.execute('SELECT @_sp_createEvent_5') 
+       result = dbcursor.fetchone()
+       if result[0] != 0:
           conn.commit()
-          return json.dumps({'message':'Event created successfully!'})
+          return json.dumps({'message':'Event created successfully with id:'+str(result[0])})
        else:
-          return json.dumps({'message':str(data[0])})
-       activities=content['activties']
+          return json.dumps({'message':str(result)})
+       '''activities=content['activties']
        for activity in activities:
          activity.eventid=data;
 
        dbcursor.callproc('sp_createActivities',activities)
        data = dbcursor.fetchall()
        content['activites']=data
-       return json.dumps(content);
+       return json.dumps(content);'''
        
    except Exception as e:
        return json.dumps({'message':'Error'})
