@@ -5,6 +5,11 @@ const flags = (state = initialState.org.flags , action) => {
 
 	switch (action.type) {
 
+		case actionConstants.SET_ORG_FLAGS : 
+		return setOrgFlags(state, action);
+		break;
+
+
 		default: 
 		return state
 	}
@@ -12,5 +17,14 @@ const flags = (state = initialState.org.flags , action) => {
 
 
 };
+
+
+function setOrgFlags(state, action) {
+	
+	let {payload} = action;
+
+
+	return {...state, ...payload};
+}
 
 export default flags;

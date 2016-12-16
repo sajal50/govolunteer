@@ -44,7 +44,6 @@ class OrganizationComponent extends React.Component {
 	render () {
 
 		let {isLoggedInChecked} = this.props.userInfo;
-		isLoggedInChecked = true;
 
 		if (!isLoggedInChecked) {
 			return (<div>Loading..</div>);

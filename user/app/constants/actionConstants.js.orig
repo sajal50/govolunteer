@@ -11,10 +11,12 @@ let actionConstants  = () => {
 		"SET_CATEGORIES" : "SET_CATEGORIES",
 		"SET_LOCATIONS" : "SET_LOCATIONS",
 		"SET_EVENTS" : "SET_EVENTS",
-		"SET_POSTS" : "SET_POSTS",
+<<<<<<< Updated upstream
+		"SET_POSTS" : "SET_POSTS"
+=======
 		"SET_ORG_FLAGS" : "SET_ORG_FLAGS",
 		"SET_RESULT_EVENT" : "SET_RESULT_EVENT"
-
+>>>>>>> Stashed changes
 	};
 
 };

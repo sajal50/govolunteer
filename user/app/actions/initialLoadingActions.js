@@ -119,7 +119,9 @@ export function login (email, password) {
 				}
 
 
-			}).catch(() => {
+			}).catch((error) => {
+
+				console.log(error);
 
 			});
 

@@ -2,6 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import NewEventComponentStyle from './assets/NewEventComponent.scss';
 import NewEventFormComponent from './NewEventFormComponent/NewEventFormComponent.js';
+import NewEventResultComponent from './NewEventResultComponent/NewEventResultComponent.js';
 
 
 class NewEventComponent extends React.Component {
@@ -22,13 +23,14 @@ class NewEventComponent extends React.Component {
 		if (newEventScreenType == 'FORM') {
 			return (
 			<div>
-				<NewEventFormComponent newEventActions = {this.props.newEventActions} metadata = {this.props.metadata}/>
+				<NewEventFormComponent 
+				newEventActions = {this.props.newEventActions} metadata = {this.props.metadata}/>
 			</div>
 			);
 		} else {
 			return (
 			<div>
-				This is the result page.
+				<NewEventResultComponent clearEventResult = {this.props.newEventActions.clearEventResult} resultEvent = {this.props.org.resultEvent} />
 			</div>
 			);
 		}

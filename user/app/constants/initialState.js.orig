@@ -28,20 +28,22 @@ let initialState = () => {
 			events : [],
 			flags : {
 				'newEventScreenType' : 'FORM'
+<<<<<<< Updated upstream
+			}
 
-			},
-			resultEvent:null
 		},
-
 		user : {
 			posts: []			
 
-
-			}
-		
+=======
+			},
+			resultEvent:null
+>>>>>>> Stashed changes
 		}
 
 	};
+
+};
 
 
 export default initialState ();

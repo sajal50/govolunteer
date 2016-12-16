@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import OrganizationComponent from '../../components/OrganizationComponent/OrganizationComponent.js';
-import {fetchEvents, createNewEvent} from '../../actions/orgActions.js';
+import {fetchEvents, createNewEvent, clearEventResult} from '../../actions/orgActions.js';
 
 
 
@@ -34,6 +34,9 @@ const mapDispatchToProps = (dispatch) => {
 			createNewEvent : (payload) => {
 
 				dispatch(createNewEvent(payload));
+			},
+			clearEventResult : () => {
+				dispatch (clearEventResult());
 			}
 			
 		}
