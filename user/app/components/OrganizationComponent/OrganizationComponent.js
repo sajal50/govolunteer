@@ -11,7 +11,7 @@ class OrganizationComponent extends React.Component {
 
 		super(props);
 		this.componentHash = {
-			'events' : SearchComponent,
+			'events' : null,
 			'accountsettings' : AccountSettingsComponent
 		};
 		
