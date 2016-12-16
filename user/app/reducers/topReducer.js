@@ -5,6 +5,7 @@ import flags from './flags/flags.js';
 import categories from './categories/categories.js';
 import locations from './locations/locations.js';
 import org from './org/org.js';
+import user from './user/user.js';
 
 export default combineReducers({
 
@@ -13,7 +14,8 @@ export default combineReducers({
 	flags,
 	categories,
 	locations,
-	org
+	org,
+	user
 });
 
 

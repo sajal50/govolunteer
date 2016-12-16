@@ -29,6 +29,11 @@ let initialState = () => {
 			flags : {
 				'newEventScreenType' : 'FORM'
 			}
+
+		},
+		user : {
+			posts: []			
+
 		}
 
 	};

@@ -10,7 +10,8 @@ let urlConstants = () => {
 		"signUp" : baseUrl + 'signup',
 		"logout" : baseUrl + 'logout',
 		"metadata" : baseUrl + 'metadata',
-		"event" : baseUrl + 'event'
+		"event" : baseUrl + 'event',
+		"post" : baseUrl + 'post'
 	};
 
 

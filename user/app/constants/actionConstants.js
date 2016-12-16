@@ -10,7 +10,8 @@ let actionConstants  = () => {
 		"SET_FLAGS" : "SET_FLAGS",
 		"SET_CATEGORIES" : "SET_CATEGORIES",
 		"SET_LOCATIONS" : "SET_LOCATIONS",
-		"SET_EVENTS" : "SET_EVENTS"
+		"SET_EVENTS" : "SET_EVENTS",
+		"SET_POSTS" : "SET_POSTS"
 	};
 
 };
