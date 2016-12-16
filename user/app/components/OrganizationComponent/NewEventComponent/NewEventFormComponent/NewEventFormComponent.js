@@ -68,6 +68,7 @@ class NewEventFormComponent extends React.Component {
 			title: this.titleRef.value,
 			startTime : this.startTime,
 			endTime : this.endTime,
+			locationId : this.locationRef.value,
 			activities : activities
 
 		});
@@ -94,8 +95,6 @@ class NewEventFormComponent extends React.Component {
 
 	}
 	onChangeOfValue (values) {
-
-		//console.log(values);
 		let newActivities = this.state.activities.map((singleActivity) => {
 
 			if (singleActivity.activityId == values.activityId) {
@@ -133,10 +132,24 @@ class NewEventFormComponent extends React.Component {
 
 	}
 
+	getLocations () {
+
+		return this.props.metadata.locations.map ((singleLocation) => {
+			return (
+				<option key = {singleLocation.locationId} value = {singleLocation.locationId}> 
+					{singleLocation.locationName}
+				</option>
+				);
+
+
+
+		});
+	}
+
 	render () {
 
 		let activitiesView = this.getActivitiesView (this.state.activities);
-
+		let locations = this.getLocations();
 		return (
 			<div>
 				<div>
@@ -150,6 +163,13 @@ class NewEventFormComponent extends React.Component {
 				</div>
 				<div>
 					End : <br/><Datetime onChange = {(date) => this.endTime = date.toDate()} timeConstraints = {{minutes: { step: 30 }}} />
+				</div>
+				<div>
+					Location : <br/>
+					<select
+					ref = {(ref) => this.locationRef = ref} >
+						{locations}
+					</select>
 				</div>
 				<div>
 					Activities : <br/>
