@@ -18,7 +18,8 @@ class AllEventsListComponent extends React.Component {
 		return events.map ((singleEvent)=>{
 
 			return (
-				<div styleName = 'single-box pointer' key = {singleEvent.eventId}>
+				<div onClick = {()=> this.props.selectEvent(singleEvent.eventId)} 
+				styleName = 'single-box pointer' key = {singleEvent.eventId}>
 					Event : {singleEvent.title} 
 				</div>
 				);
