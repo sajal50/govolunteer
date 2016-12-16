@@ -231,3 +231,85 @@ export function logout () {
 
 	}
 }
+
+export function fetchCategories () {
+
+	return function (dispatch, getState) {
+
+		let {isCategoryFetched} = getState().flags;
+
+		if (!isCategoryFetched) {
+
+
+			kfetch(urlConstants.categories)
+			.then((response) => {
+
+				return response.json();
+			}).then((json)=> {
+
+				if (!json.error) {
+
+					dispatch(setFlags({
+						isCategoryFetched: true
+					}));
+
+					dispatch ({
+						type : actionConstants.SET_CATEGORIES,
+						payload : json
+					})
+				}
+
+
+
+			}).catch(() => {
+				
+			});
+		}
+
+
+	};
+
+
+
+}
+
+export function fetchLocations  () {
+
+	return function (dispatch, getState) {
+
+		let {isLocationFetched} = getState().flags;
+
+		if (!isLocationFetched) {
+
+
+			kfetch(urlConstants.locations)
+			.then((response) => {
+
+				return response.json();
+			}).then((json)=> {
+
+				if (!json.error) {
+
+					dispatch(setFlags({
+						isLocationFetched: true
+					}));
+
+					dispatch ({
+						type : actionConstants.SET_LOCATIONS,
+						payload : json
+					})
+				}
+
+
+
+			}).catch(() => {
+				
+			});
+		}
+
+
+	};
+
+
+
+}

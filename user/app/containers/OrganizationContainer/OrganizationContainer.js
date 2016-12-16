@@ -1,14 +1,14 @@
 import {connect} from 'react-redux';
 import OrganizationComponent from '../../components/OrganizationComponent/OrganizationComponent.js';
-import {fetchCategories, fetchLocations, search} from '../../actions/searchActions.js';
+
 
 const mapStateToProps = (state) => {
 	return {
 		userInfo : state.userInfo,
-		searchProps : {
-			categories : state.categories,
+		org : state.org,
+		metadata : {
 			locations : state.locations,
-			posts: state.posts
+			categories : state.categories
 		}
 	};
 };
@@ -16,21 +16,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
 	return {
-		
-		searchActions : {
-
-			fetchCategories: () => {
-				dispatch(fetchCategories());
-			},
-			fetchLocations: () => {
-				dispatch (fetchLocations());
-			},
-			search: (payload) => {
-
-				dispatch(search(payload))
-			}
-
-		}
 
 	};
 

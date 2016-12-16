@@ -22,7 +22,12 @@ let initialState = () => {
 
 			isCategoryFetched:false,
 			isLocationFetched :false
+		},
+		org : {
+
+
 		}
+
 	};
 
 };
