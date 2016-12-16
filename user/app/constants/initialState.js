@@ -25,7 +25,7 @@ let initialState = () => {
 		},
 		org : {
 
-
+			events : []
 		}
 
 	};

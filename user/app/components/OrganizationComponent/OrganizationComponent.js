@@ -1,9 +1,9 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import OrganizationComponentStyles from './assets/OrganizationComponent.scss';
-import NotificationSystem from 'react-notification-system';
 import SidebarComponent from './SidebarComponent/SidebarComponent.js';
 import AccountSettingsComponent from './AccountSettingsComponent/AccountSettingsComponent.js';
+import EventHomeComponent from './EventHomeComponent/EventHomeComponent.js';
 
 class OrganizationComponent extends React.Component {
 
@@ -11,7 +11,7 @@ class OrganizationComponent extends React.Component {
 
 		super(props);
 		this.componentHash = {
-			'events' : null,
+			'events' : EventHomeComponent,
 			'accountsettings' : AccountSettingsComponent
 		};
 		
@@ -27,7 +27,7 @@ class OrganizationComponent extends React.Component {
 
 		switch (this.props.params.childRoute) {
 
-			case 'events' : return {searchProps: this.props.searchProps, searchActions:this.props.searchActions};
+			case 'events' : return {eventActions: this.props.eventActions, org: this.props.org};
 							break;
 		}
 	}
@@ -51,7 +51,7 @@ class OrganizationComponent extends React.Component {
 					
 					<div className = 'col-xs-9'>
 
-						Event Component
+						<ComponentToBeLoaded {...propsToBePassed}/>
 						
 					</div>
 
