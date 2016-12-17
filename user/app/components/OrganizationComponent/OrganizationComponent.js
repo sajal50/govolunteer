@@ -2,7 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import OrganizationComponentStyles from './assets/OrganizationComponent.scss';
 import SidebarComponent from './SidebarComponent/SidebarComponent.js';
-import AccountSettingsComponent from './AccountSettingsComponent/AccountSettingsComponent.js';
+import AccountSettingsComponent from '../commonComponents/AccountSettingsComponent/AccountSettingsComponent.js';
 import EventHomeComponent from './EventHomeComponent/EventHomeComponent.js';
 import NewEventComponent from './NewEventComponent/NewEventComponent.js';
 
@@ -35,6 +35,10 @@ class OrganizationComponent extends React.Component {
 			
 			case 'new-event' :  
 			return {newEventActions : this.props.newEventActions, org: this.props.org, metadata:this.props.metadata}
+			break;
+
+			case 'accountsettings' :
+			return {accountManagementActions: this.props.accountManagementActions};
 			break;
 			
 			default : return {};

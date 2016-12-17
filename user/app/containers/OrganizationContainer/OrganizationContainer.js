@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 import OrganizationComponent from '../../components/OrganizationComponent/OrganizationComponent.js';
 import {fetchEvents, createNewEvent, clearEventResult} from '../../actions/orgActions.js';
-
+import {triggerNotification} from '../../actions/notificationActions.js';
+import {updatePassword} from '../../actions/userManagementActions.js';
 
 
 const mapStateToProps = (state) => {
@@ -39,6 +40,19 @@ const mapDispatchToProps = (dispatch) => {
 				dispatch (clearEventResult());
 			}
 			
+		},
+		accountManagementActions : {
+
+
+			triggerNotification : (payload) => {
+
+				dispatch(triggerNotification(payload));
+			},
+			updatePassword : (payload) => {
+
+				dispatch(updatePassword(payload));
+			}
+
 		}
 
 	};

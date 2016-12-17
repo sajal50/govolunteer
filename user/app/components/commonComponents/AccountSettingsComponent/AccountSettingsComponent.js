@@ -36,19 +36,36 @@ class AccountSettingsComponent extends React.Component {
 
 
 	}
+
+	getPropsToBePassed () {
+		switch (this.state.activeKey) {
+			case 1 :
+			return {accountManagementActions:this.props.accountManagementActions};
+			
+			break;
+
+
+			case 2 :
+			return {};
+			break;
+
+			default:
+			return {};
+		}
+	}
 	render () {
 
 		let ComponentToBeLoaded  = this.getComponentToBeLoaded();
-
+		let propsToBePassed = this.getPropsToBePassed();
 		return (
 
 			<div>
 				<Nav bsStyle="tabs" justified activeKey={this.state.activeKey} onSelect={this.handleSelect}>
 		          <NavItem eventKey={1}> Update Password</NavItem>
-		          <NavItem eventKey={2}> Personal Information</NavItem>
+		          <NavItem eventKey={2}> Update Other Information</NavItem>
 		        </Nav>
 		        <div>
-		        	<ComponentToBeLoaded />
+		        	<ComponentToBeLoaded {...propsToBePassed} />
 		        </div>
 
 			</div>

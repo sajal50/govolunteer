@@ -137,7 +137,7 @@ export function login (email, password) {
 
 }
 
-function redirectAccordingToRole (type) {
+export function redirectAccordingToRole (type) {
 	if (type == 'PERSON') {
 		hashHistory.push('user/');	
 	} else {
