@@ -38,7 +38,11 @@ class OrganizationComponent extends React.Component {
 			break;
 
 			case 'accountsettings' :
-			return {accountManagementActions: this.props.accountManagementActions};
+			return {
+				accountManagementActions: this.props.accountManagementActions,
+			 	userInfo : this.props.userInfo,
+			 	metadata : this.props.metadata
+			 };
 			break;
 			
 			default : return {};

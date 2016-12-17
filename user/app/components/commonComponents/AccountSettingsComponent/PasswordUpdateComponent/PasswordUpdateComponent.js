@@ -89,6 +89,11 @@ class PasswordUpdateComponent extends React.Component {
 			this.oldpasswordRefSave.value,
 			this.newpasswordRefSave.value
 		);
+
+		this.oldpasswordRefSave.value = '';
+		this.newpasswordRefSave.value = '';
+		this.newpasswordCopyRefSave.value = '';
+
 		
 	}
 	render () {

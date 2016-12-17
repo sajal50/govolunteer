@@ -46,7 +46,11 @@ class AccountSettingsComponent extends React.Component {
 
 
 			case 2 :
-			return {};
+			return {
+				accountManagementActions : this.props.accountManagementActions,
+				userInfo : this.props.userInfo,
+				metadata : this.props.metadata
+			};
 			break;
 
 			default:

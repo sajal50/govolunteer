@@ -5,8 +5,6 @@ import {hashHistory} from 'react-router';
 import {triggerNotification} from './notificationActions.js';
 import {kfetch} from '../util/util.js';
 
-import {redirectAccordingToRole} from './initialLoadingActions.js';
-
 
 export function updatePassword (oldpassword,newpassword) {
 
@@ -30,7 +28,6 @@ export function updatePassword (oldpassword,newpassword) {
 							message: "Password Updated.",
 							level : "success"
 						}));
-						redirectAccordingToRole (getState().userInfo.type);
 
 
 
@@ -52,5 +49,47 @@ export function updatePassword (oldpassword,newpassword) {
 				});
 
 	}
+
+}
+
+export function updateInfo (payload) {
+
+	return function (dispatch, getState) {
+
+		kfetch(urlConstants.userdetails, {
+
+					method :'POST',
+					headers: {
+						'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+					},
+					body: serialize(payload)
+				}).then((response) => {
+					return response.json();
+				}).then((json)=> {
+
+					if (!json.error) {
+
+						dispatch(triggerNotification({
+							message: "Details Updated.",
+							level : "success"
+						}));
+						dispatch ({
+
+							'type' : actionConstants.SET_USER_INFO,
+							payload: payload
+						});
+
+						
+
+					}
+
+
+				}).catch(() => {
+
+				});
+
+	}
+
+
 
 }

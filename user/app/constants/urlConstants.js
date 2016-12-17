@@ -13,9 +13,9 @@ let urlConstants = () => {
 		"event" : baseUrl + 'event',
 		"post" : baseUrl + 'post',
 		"userpost" : baseUrl + 'userpost',
-		"password": baseUrl + 'password'
-		"responsepost" : baseUrl + 'responsepost'
-
+		"password": baseUrl + 'password',
+		"responsepost" : baseUrl + 'responsepost',
+		"userdetails" : baseUrl + 'userdetails'
 	};
 
 
