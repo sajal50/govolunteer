@@ -24,6 +24,7 @@ app.config['MYSQL_DATABASE_DB'] = 'govol'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql = MySQL(app)
 '''mysql.init_app(app)'''
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route('/')
 @app.route('/index')
@@ -57,8 +58,8 @@ def signup():
         user_id = dbcursor.fetchall()
         if  user_id[0][0] is not 0:
             conn.commit()
-            content['uid']=user_id[0]
-            session['uid']=user_id[0]
+            content['uid']=user_id[0][0]
+            session['uid']=user_id[0][0]
             return json.dumps(content)
         else:
             return json.dumps({'error':str(user_id[0])})
