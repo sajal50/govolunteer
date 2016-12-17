@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules';
 import PersonalInformationUpdateComponentStyles from './assets/PersonalInformationUpdateComponent.scss';
 import {hashHistory} from 'react-router';
 import _ from 'lodash';
+import ProfilePicUploadComponent from './ProfilePicUploadComponent/ProfilePicUploadComponent.js';
 
 class PersonalInformationUpdateComponent extends React.Component {
 
@@ -64,6 +65,10 @@ class PersonalInformationUpdateComponent extends React.Component {
 				</div>
 
 				<input type='button' onClick = {() => this.onClickUpdate()} className = 'btn btn-success' value = 'Update' />
+
+				<ProfilePicUploadComponent 
+				accountManagementActions = {this.props.accountManagementActions}
+				/>
 			</div>
 
 

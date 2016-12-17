@@ -139,7 +139,7 @@ export function login (email, password) {
 
 export function redirectAccordingToRole (type) {
 	if (type == 'PERSON') {
-		hashHistory.push('user/');	
+		hashHistory.push('user/myposts');	
 	} else {
 		hashHistory.push ('org/events');
 	}

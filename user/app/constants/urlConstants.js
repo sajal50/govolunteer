@@ -15,7 +15,8 @@ let urlConstants = () => {
 		"userpost" : baseUrl + 'userpost',
 		"password": baseUrl + 'password',
 		"responsepost" : baseUrl + 'responsepost',
-		"userdetails" : baseUrl + 'userdetails'
+		"userdetails" : baseUrl + 'userdetails',
+		"profilePic" : baseUrl + 'profilePic'
 	};
 
 

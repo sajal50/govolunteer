@@ -17,6 +17,9 @@ export function loginCheck () {
 
 				hashHistory.push('org/events');
 
+			} else {
+				hashHistory.push('user/myposts');
+
 			}
 		}
 
@@ -35,8 +38,13 @@ export function userCheck () {
 			case 'SESSION_DOES_NOT_EXIST' : 
 			case 'USER_NOT_LOGGED_IN' : hashHistory.push ('login')
 										break;
-			case 'USER_LOGGED_IN' : 
-									break;
+			case 'USER_LOGGED_IN' :
+			if (store.getState().userInfo.type == 'ORGANIZATION') {
+
+				hashHistory.push('org/events');
+
+			}
+			break;
 
 
 		}
@@ -59,7 +67,12 @@ export function orgCheck () {
 			case 'USER_NOT_LOGGED_IN' : hashHistory.push ('login')
 										break;
 			case 'USER_LOGGED_IN' : 
-									break;
+			if (store.getState().userInfo.type == 'PERSON') {
+
+				hashHistory.push('user/myposts');
+
+			}
+			break;
 
 
 		}

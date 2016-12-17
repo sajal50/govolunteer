@@ -4,6 +4,7 @@ import actionConstants from '../constants/actionConstants.js';
 import {hashHistory} from 'react-router';
 import {triggerNotification} from './notificationActions.js';
 import {kfetch} from '../util/util.js';
+import request from 'superagent';
 
 
 export function updatePassword (oldpassword,newpassword) {
@@ -92,4 +93,38 @@ export function updateInfo (payload) {
 
 
 
+}
+
+export function updateProfilePic (file) {
+
+
+
+	return function (dispatch, getState) {
+
+		request
+		.post(urlConstants.profilePic)
+		.withCredentials()
+		.attach('pic', file)
+		.end((error, result) => {
+
+			if (result) {
+				dispatch({
+
+					type : actionConstants.SET_USER_INFO,
+					payload: {
+						pic:result.body.pic
+					}
+				});
+				dispatch(triggerNotification({
+							message: "Profile Picture Updated.",
+							level : "success"
+				}));
+			}
+
+
+		});
+
+
+
+	}
 }

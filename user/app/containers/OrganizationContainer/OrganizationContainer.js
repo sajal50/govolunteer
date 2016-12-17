@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import OrganizationComponent from '../../components/OrganizationComponent/OrganizationComponent.js';
 import {fetchEvents, createNewEvent, clearEventResult} from '../../actions/orgActions.js';
 import {triggerNotification} from '../../actions/notificationActions.js';
-import {updatePassword, updateInfo} from '../../actions/userManagementActions.js';
+import {updatePassword, updateInfo, updateProfilePic} from '../../actions/userManagementActions.js';
 
 
 const mapStateToProps = (state) => {
@@ -55,6 +55,10 @@ const mapDispatchToProps = (dispatch) => {
 			updateInfo : (payload) => {
 
 				dispatch (updateInfo(payload));
+			},
+			updateProfilePic : (file) => {
+
+				dispatch(updateProfilePic(file));
 			}
 
 		}
