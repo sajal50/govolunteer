@@ -12,7 +12,7 @@ class SinglePostDetailComponent extends React.Component {
 
 	getViewForPosts (singlePost) {
      		let viewForRequests=this.getViewForRequests(singlePost.requests);
-		
+			let requestOptions = this.getRequestOptions(singlePost.requests);
 
 			return (
 
@@ -31,6 +31,19 @@ class SinglePostDetailComponent extends React.Component {
 					</div>
 					<div>
 						Requests : <div>{viewForRequests}</div>
+					</div>
+
+					<br/>
+					<div>
+					Select a request to accept : <br/>
+					<select 
+						ref = {(ref) => this.requestRef = ref} >
+						{requestOptions}
+					</select>
+					</div>
+					<div>
+					<input type = 'button'  className = 'btn btn-success'
+					 onClick = {() => this.onClickAcceptRequest()} value = 'Accept'/>
 					</div>
 				</div>
 
@@ -65,6 +78,10 @@ class SinglePostDetailComponent extends React.Component {
 					<div>
 						Activity End Time : {singleRequest.activity.endTime} 
 					</div>
+					<div>
+						Request Status : {singleRequest.statusOfRequest}
+					</div>
+					
 					
 				</div>
 				);
@@ -72,10 +89,36 @@ class SinglePostDetailComponent extends React.Component {
 
 		});
 	}
+
+	onClickAcceptRequest () {
+
+		//TODO- validations
+		
+		 this.props.postActions.acceptRequest({
+		 	activityId: this.requestRef.value,
+		 	postId: this.props.postSelected.postId,
+		 	response: '2'
+		 });
+
+
+	}
+
+	getRequestOptions (posts) {
+
+		return posts.map ((singleRequest) => {
+			return (
+				<option key = {singleRequest.activity.activityId} value = {singleRequest.activity.activityId}> 
+					{singleRequest.activity.title}
+				</option>
+				);
+
+
+
+		});
+	}
 	
 
 	render () {
-
 		let {postSelected} = this.props;
 
 

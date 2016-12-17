@@ -76,3 +76,44 @@ export function createNewPost (payload) {
 
 
 }
+
+
+export function acceptRequest (payload) {
+	return function (dispatch, getState) {
+		kfetch(urlConstants.responsepost, {
+
+			method :'POST',
+			headers: {
+				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: serialize(payload)
+		}).then((response) => {
+			return response.json();
+		}).then((json)=> {
+
+
+
+			if (!json.error) {
+console.log(json);
+				fetchPosts();
+				// dispatch(triggerNotification({
+				// 			message : 'Post created successfully',
+				// 			level: 'success'
+				// 		}));
+				// hashHistory.push('user/myposts');					
+
+			
+
+			}
+
+		}).catch((error) => {
+
+			console.log(error);
+
+		});
+	}
+
+
+
+}
+

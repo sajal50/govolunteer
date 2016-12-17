@@ -48,8 +48,9 @@ class MyPostsHomeComponent extends React.Component {
 					</div>
 					<div className = 'col-xs-8' >
 
-						<SinglePostDetailComponent postSelected = {this.state.postSelected} />
+						<SinglePostDetailComponent postSelected = {this.state.postSelected} postActions = {this.props.postActions}/>
 					</div>
+					
 
 			</div>
 			);

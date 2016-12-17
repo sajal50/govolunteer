@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import UserComponent from '../../components/UserComponent/UserComponent.js';
-import {fetchPosts,createNewPost} from '../../actions/userActions.js';
+import {fetchPosts,createNewPost,acceptRequest} from '../../actions/userActions.js';
 
 
 const mapStateToProps = (state) => {
@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
 			fetchPosts : () => {
 
 				dispatch(fetchPosts());
+			},
+			acceptRequest : (payload) => {
+				dispatch(acceptRequest(payload));
 			}
 		},
 
