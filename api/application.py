@@ -166,17 +166,54 @@ def newevent():
             #return json.dumps(activity['user']['uid'])
             userids=activity['user']['uid']
             #return json.dumps(userids)
-            dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,activity['cityid'],0))
-            dbcursor.execute('SELECT @_sp_createActivity_8')
+            dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,activity['cityid'],data1[0][6],0))
+            dbcursor.execute('SELECT @_sp_createActivity_9')
             result2 = dbcursor.fetchone()
             if result2[0] != 0:
                 activity['activityid']=result2[0]
             else:
                 return json.dumps({'message':str(result2)})
        content['activities']=activities
+       conn.commit()
        return json.dumps(content)
    except Exception as e:
        return json.dumps({'message':'Error1'})
+
+
+@app.route('/api/event', methods=['GET'])
+def getallevent():
+   try:
+       conn=mysql.connect()
+       dbcursor = conn.cursor();
+       orgid=1
+       dbcursor.callproc('sp_getEvents',(orgid,))
+       #return json.dumps({'message':'Works'})
+       allevents = dbcursor.fetchall()
+       #return json.dumps({'message':'Works'})
+       items_list1=[]
+       if len(allevents) is 0:
+                return json.dumps({'message':'No Events Present'})
+       for row in allevents:
+            event=modelevent(row)
+            dbcursor.callproc('sp_getActivity',(event['eventid'],))
+            allactivities = dbcursor.fetchall()
+            if len(allactivities) is 0:
+                return json.dumps({'message':'No Events Present'})
+            items_list2=[]
+            for activity in allactivities:
+                activity=modelactivity(activity)
+                dbcursor.callproc('sp_getUser',(activity['activityid'],))
+                data1 = dbcursor.fetchall()
+                if len(data1) is 0:
+                    return json.dumps({'message':'User does not exist'})
+                user=modeluser(data1)
+                activity['user']=user
+                items_list2.append(activity)
+            event['activities']=items_list2
+            items_list1.append(event)
+       return json.dumps(items_list1)
+   except Exception as e:
+       return json.dumps({'message':'Error1'+str(e)})
 
 def modeluser(usercred):
     i = {
@@ -188,5 +225,30 @@ def modeluser(usercred):
 
                 }
     return i;
+
+def modelevent(eventdet):
+    i = {
+                    'eventid':int(eventdet[0]),
+                    'title':str(eventdet[1]),
+                    'desc':str(eventdet[2]),
+                    'starttime':str(eventdet[3]),
+                    'endtime':str(eventdet[4]),
+                    'activities':None
+
+                }
+    return i;
+
+def modelactivity(eventdet):
+    i = {
+                    'activityid':int(eventdet[0]),
+                    'title':str(eventdet[1]),
+                    'desc':str(eventdet[2]),
+                    'starttime':str(eventdet[3]),
+                    'endtime':str(eventdet[4]),
+                    'user':None
+
+                }
+    return i;    
+
 if __name__ == "__main__":
     app.run(debug=True)
