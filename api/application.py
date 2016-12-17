@@ -28,26 +28,27 @@ mysql = MySQL(app)
 def index():
     return render_template('index.html')
 
-@app.route('/api/authz/signup/', methods=['POST'])
+@app.route('/api/authz/signup', methods=['POST'])
 def signup():
     try:
-        if not request.json or not 'EmailId' in request.json:
+        if not request.json or not 'email' in request.json:
                return json.dumps({'message':'Error'})
         content = request.get_json(silent=True)
         _hashed_password = generate_password_hash(content['password'])
         conn=mysql.connect()
-        dbcursor = conn.cursor();
-        dbcursor.callproc('sp_createUser',(content['username'],content['EmailId'],_hashed_password))
-        data = dbcursor.fetchall()
-        if len(data) is 0:
+        dbcursor = conn.cursor()
+        dbcursor.callproc('sp_createUser',(content['name'],content['email'],_hashed_password,content['type']))
+        user_id = dbcursor.fetchall()
+        if  user_id[0][0] is not 0:
             conn.commit()
-            return json.dumps({'message':'User created successfully !'})
+            content['uid']=user_id[0]
+            return json.dumps(content)
         else:
-            return json.dumps({'message':str(data[0])})
+            return json.dumps({'errors':str(user_id[0])})
     except Exception as e:
-        return json.dumps({'message':'Error2'})
+        return json.dumps({'error':'Error1'+str(e)})
 
-@app.route('/api/authz/signin/', methods=['POST'])
+@app.route('/api/authz/signin', methods=['POST'])
 def signin():
     try:
         if not request.json or not 'EmailId' in request.json and not 'password' in request.json:
@@ -57,7 +58,7 @@ def signin():
         dbcursor = conn.cursor();
         dbcursor.callproc('sp_loginUser',(content['EmailId'],0,0))
         dbcursor.execute('SELECT @_sp_loginUser_1,@_sp_loginUser_2') 
-        result = dbcursor.fetchone() 
+        result = dbcursor.fetchone()
         if check_password_hash(result[0], content['password']):
             conn.commit()
             return json.dumps({'message':'Logged In'})
@@ -260,31 +261,19 @@ def getallevent():
    except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
 
-@app.route('/api/userpost', methods=['GET'])
-def userpostget():
+
+@app.route('/api/approve', methods=['POST'])
+def approveactivity():
    try:
+    if not request.json or not 'postid' in request.json:
+        return json.dumps({'message':'Error'})
+    content=request.get_json(silent=True);
     conn=mysql.connect()
-       dbcursor = conn.cursor();
-       orgid=1
-       dbcursor.callproc('sp_getPosts',(orgid,))
-       #return json.dumps({'message':'Works'})
-       allposts = dbcursor.fetchall()
-       #return json.dumps({'message':'Works'})
-       items_list1=[]
-       if len(allposts) is 0:
-                return json.dumps({'message':'No Events Present'})
-       for row in allevents:
-            post=modelpost(row)
-            dbcursor.callproc('sp_getActivity',(post['postid'],))
-            allactivities = dbcursor.fetchall()
-            if len(allactivities) is 0:
-    if len(data) is 0:
-        conn.commit()
-        return json.dumps({'message':'Post created successfully!'})
-    else:
-        return json.dumps({'message':str(data[0])})
+    dbcursor = conn.cursor();
+    dbcursor.callproc('sp_',(content['userId'],content['Title'],content['Description'],content['StartDate'],content['EndDate'],content['Tstamp'],content['CityId'],content['Category']))
    except Exception as e:
-        return json.dumps({'message':'Error1'})
+       return json.dumps({'message':'Error1'+str(e)})
+
 
 def modeluser(usercred):
     i = {
