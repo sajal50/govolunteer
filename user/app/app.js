@@ -8,7 +8,7 @@ import LoginContainer from './containers/LoginContainer/LoginContainer.js';
 import SignUpContainer from './containers/SignUpContainer/SignUpContainer.js';
 import OrganizationContainer from './containers/OrganizationContainer/OrganizationContainer.js';
 import UserContainer from './containers/UserContainer/UserContainer.js';
-import {loginCheck, orgCheck} from './checks/checks.js';
+import {loginCheck, orgCheck, userCheck} from './checks/checks.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
@@ -20,7 +20,7 @@ ReactDOM.render(
 				<Route onEnter = {loginCheck} path = 'login' component = {LoginContainer} />
 				<Route path = "signUp" component = {SignUpContainer} />
 				<Route onEnter = {orgCheck} path = "org/:childRoute" component = {OrganizationContainer} />
-				<Route path = "user/:childRoute" component = {UserContainer} />
+				<Route onEnter = {userCheck} path = "user/:childRoute" component = {UserContainer} />
 			</Route>
 		</Router>
 
