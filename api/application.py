@@ -6,7 +6,7 @@ import time
 import config as Config
 from flask import Flask
 from pprint import pprint
-from flask import Flask, request, render_template, g, redirect, Response, make_response, jsonify, url_for
+from flask import Flask, request, render_template, g, redirect, Response, make_response, jsonify, url_for, session
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 
@@ -30,6 +30,8 @@ def index():
 
 @app.route('/api/getSession', methods=['GET'])
 def getSession():
+    if 'uid' not in session:
+        return json.dumps({'error':'SESSION_DOES_NOT_EXIST'})
     return json.dumps(session['uid'])
 
 @app.route('/api/authz/logout', methods=['POST'])
