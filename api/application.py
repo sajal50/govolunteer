@@ -145,8 +145,8 @@ def metadata():
        items_list1=[]
        for item in data:
                 i = {
-                    'CityId':item[0],
-                    'CityName':item[1]
+                    'locationId':item[0],
+                    'locationName':item[1]
                 }
                 items_list1.append(i)
        #dbcursor.execute('SELECT @_sp_getMetadata_1')
@@ -155,11 +155,11 @@ def metadata():
        items_list2=[]
        for item in data:
                 i = {
-                    'CategoryId':item[0],
-                    'CategoryName':item[1]
+                    'categoryId':item[0],
+                    'categoryName':item[1]
                 }
                 items_list2.append(i)
-       return json.dumps({'city':items_list1,'category':items_list2})
+       return json.dumps({'locations':items_list1,'categories':items_list2})
    except Exception as e:
        return json.dumps({'message':'Error'})
 
