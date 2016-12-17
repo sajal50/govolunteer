@@ -9,9 +9,11 @@ from pprint import pprint
 from flask import Flask, request, render_template, g, redirect, Response, make_response, jsonify, url_for, session
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
+from flask_cors import CORS, cross_origin
 
 application = Flask(__name__)  
 app = application
+CORS(app,supports_credentials = True)
 #mysql = MySQL()
 
 
