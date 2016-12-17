@@ -35,7 +35,12 @@ def index():
 def getSession():
     if 'uid' not in session:
         return json.dumps({'error':'SESSION_DOES_NOT_EXIST'})
-    return json.dumps(session['uid'])
+    conn=mysql.connect()
+    dbcursor = conn.cursor()
+    dbcursor.callproc('sp_getUser',(session['uid'],))
+    result = dbcursor.fetchall()
+    newuser=modelusersignin(result)
+    return json.dumps(newuser)
 
 @app.route('/api/authz/logout', methods=['POST'])
 def logout():
@@ -77,7 +82,8 @@ def signin():
         #return json.dumps(content['email'])
         dbcursor.callproc('sp_loginUser',(str(content['email']),))
         result = dbcursor.fetchall()
-        #return json.dumps(result[0])
+        if len(result) is 0:
+          return json.dumps({'error':'USER_DOES_NOT_EXIST'})
         if check_password_hash(result[0][3], content['password']):
             conn.commit()
             newuser=modelusersignin(result)
@@ -86,7 +92,7 @@ def signin():
         else:
             return json.dumps({'message':'Could not log in!!'+str(result[1])})
     except Exception as e:
-        return json.dumps({'error':str(e)})
+        return json.dumps({'error1':str(e)})
 
 @app.route('/api/password', methods=['POST'])
 def updatepassword():
@@ -269,7 +275,7 @@ def getallevent():
             items_list2=[]
             for activity in allactivities:
                 activity=modelactivity(activity)
-                dbcursor.callproc('sp_getUser',(activity['activityid'],))
+                dbcursor.callproc('sp_getUserFromActivity',(activity['activityid'],))
                 data1 = dbcursor.fetchall()
                 if len(data1) is 0:
                     return json.dumps({'message':'User does not exist'})
@@ -321,10 +327,10 @@ def userpostget():
 
 
 
-@app.route('/api/approve', methods=['POST'])
+@app.route('/api/responsepost', methods=['POST'])
 def approveactivity():
    try:
-    if not request.json or not 'postid' in request.json:
+    if not request.json or not 'postId' in request.json:
         return json.dumps({'message':'Error'})
     content=request.get_json(silent=True);
     conn=mysql.connect()
