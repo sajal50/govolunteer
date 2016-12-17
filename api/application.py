@@ -260,6 +260,32 @@ def getallevent():
    except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
 
+@app.route('/api/userpost', methods=['GET'])
+def userpostget():
+   try:
+    conn=mysql.connect()
+       dbcursor = conn.cursor();
+       orgid=1
+       dbcursor.callproc('sp_getPosts',(orgid,))
+       #return json.dumps({'message':'Works'})
+       allposts = dbcursor.fetchall()
+       #return json.dumps({'message':'Works'})
+       items_list1=[]
+       if len(allposts) is 0:
+                return json.dumps({'message':'No Events Present'})
+       for row in allevents:
+            post=modelpost(row)
+            dbcursor.callproc('sp_getActivity',(post['postid'],))
+            allactivities = dbcursor.fetchall()
+            if len(allactivities) is 0:
+    if len(data) is 0:
+        conn.commit()
+        return json.dumps({'message':'Post created successfully!'})
+    else:
+        return json.dumps({'message':str(data[0])})
+   except Exception as e:
+        return json.dumps({'message':'Error1'})
+
 def modeluser(usercred):
     i = {
                     'uid':1,
@@ -293,8 +319,20 @@ def modelactivity(eventdet):
                     'user':None
 
                 }
-    return i;    
+    return i;
 
+def modelpost(postdet):
+    i = {
+                    'postid':int(postdet[0]),
+                    'title':str(postdet[1]),
+                    'desc':str(postdet[2]),
+                    'starttime':str(postdet[3]),
+                    'endtime':str(postdet[4]),
+                    'statusOfRequest':str(postdet[5]),
+                    'requests':None
+
+                }
+    return i;    
 
 if __name__ == "__main__":
     app.run(debug=True)
