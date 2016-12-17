@@ -20,7 +20,7 @@ export function setTriggerNotification (flag) {
 
 export function triggerNotification (notifConfig) {
 
-	return function (dispatch) {
+	return function (dispatch, getState) {
 
 
 		dispatch(addNotification(notifConfig));

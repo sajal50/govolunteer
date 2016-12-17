@@ -11,7 +11,8 @@ let urlConstants = () => {
 		"logout" : baseUrl + 'logout',
 		"metadata" : baseUrl + 'metadata',
 		"event" : baseUrl + 'event',
-		"post" : baseUrl + 'post'
+		"post" : baseUrl + 'post',
+		"userpost" : baseUrl + 'userpost'
 	};
 
 

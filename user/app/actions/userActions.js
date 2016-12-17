@@ -38,3 +38,41 @@ export function fetchPosts () {
 
 
 }
+
+export function createNewPost (payload) {
+	return function (dispatch, getState) {
+		kfetch(urlConstants.userpost, {
+
+			method :'POST',
+			headers: {
+				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: serialize(payload)
+		}).then((response) => {
+			return response.json();
+		}).then((json)=> {
+
+
+
+			if (!json.error) {
+
+				dispatch(triggerNotification({
+							message : 'Post created successfully',
+							level: 'success'
+						}));
+				hashHistory.push('user/myposts');					
+
+			
+
+			}
+
+		}).catch((error) => {
+
+			console.log(error);
+
+		});
+	}
+
+
+
+}

@@ -37,6 +37,11 @@ class MyPostsHomeComponent extends React.Component {
 		//TODO - LOADING.. WILL COME while the posts are being fetched.
 		return (
 			<div>
+				<div>
+					<input onClick = {() => hashHistory.push('user/newpost')} className = 'btn btn-success'
+					 type = 'button' value = 'New Post' />
+				</div>
+				<br/>
 					<div className = 'col-xs-4' >
 						<AllPostsListComponent selectPost = {this.selectPost} posts = {posts} />
 
