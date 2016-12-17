@@ -282,6 +282,44 @@ def getallevent():
    except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
 
+@app.route('/api/userpost', methods=['GET'])
+def userpostget():
+   try:
+       conn=mysql.connect()
+       dbcursor = conn.cursor();
+       userid=1
+       dbcursor.callproc('sp_getUserPosts',(userid,))
+       #return json.dumps({'message':'Works'})
+       allPosts = dbcursor.fetchall()
+       #print len(allPosts)
+       #return json.dumps(allPosts)
+       #return json.dumps({'message':'Works'})
+       items_list1=[]
+       if len(allPosts) == 0:
+          return json.dumps([])
+       for row in allPosts:
+          post=modelpost(row)
+          if post['statusOfRequest']==0:
+            continue
+          else:
+            items_list2=[]
+            dbcursor.callproc('sp_getAllDataForPost',(post['postId'],))
+            allRequestsOfAPost = dbcursor.fetchall()
+            if len(allRequestsOfAPost) == 0:
+              continue
+            for row in allRequestsOfAPost:
+              activity=modelactivityforpost(row)
+              items_list2.append(activity)
+            post['requests']=items_list2
+            items_list1.append(post)
+
+            
+       return json.dumps(items_list1)
+            
+   except Exception as e:
+         return json.dumps({'message':'Error1'+str(e)})
+
+
 
 @app.route('/api/approve', methods=['POST'])
 def approveactivity():
@@ -341,6 +379,26 @@ def modelactivity(eventdet):
 
                 }
     return i;
+
+def modelactivityforpost(eventdet):
+    j = {
+                    'activityId':int(eventdet[0]),
+                    'desc':str(eventdet[5]),
+                    'title':str(eventdet[4]),
+                    'startTime':str(eventdet[2]),
+                    'endTime':str(eventdet[3])
+    }
+    i = {
+                    'eventId':int(eventdet[1]),
+                    'title':str(eventdet[11]),
+                    'desc':str(eventdet[13]),                    
+                    'userId':int(eventdet[12]),
+                    'username':str(eventdet[17]),
+                    'activity':j,
+                    'statusOfRequest':int(eventdet[9])
+                }
+    return i;
+
 
 def modelpost(postdet):
     i = {
