@@ -20,12 +20,12 @@ class SidebarComponent extends React.Component {
 
 	}
 
-	// onClickAccountSettings () {
+	onClickAccountSettings () {
 
-	// 	hashHistory.push('org/accountsettings');
+		hashHistory.push('user/accountsettings');
 
 
-	// }
+	}
 	onClickNotifications () {
 		console.log('clicked');
 	}
@@ -37,7 +37,9 @@ class SidebarComponent extends React.Component {
 				 <div onClick = {()=> this.onClickMyPosts()} >
 				 	My Posts
 				 </div>
-				
+				<div onClick = {()=> this.onClickAccountSettings()}>
+					Account Settings
+				</div>
 				 <div onClick = {()=> this.onClickNotifications()}>
 					Notifications
 				</div>

@@ -1,6 +1,8 @@
 import {connect} from 'react-redux';
 import UserComponent from '../../components/UserComponent/UserComponent.js';
 import {fetchPosts,createNewPost,acceptRequest} from '../../actions/userActions.js';
+import {triggerNotification} from '../../actions/notificationActions.js';
+import {updatePassword, updateInfo} from '../../actions/userManagementActions.js';
 
 
 const mapStateToProps = (state) => {
@@ -35,6 +37,23 @@ const mapDispatchToProps = (dispatch) => {
 				dispatch(createNewPost(payload));
 			}
 			
+		},
+		accountManagementActions : {
+
+
+			triggerNotification : (payload) => {
+
+				dispatch(triggerNotification(payload));
+			},
+			updatePassword : (payload) => {
+
+				dispatch(updatePassword(payload));
+			},
+			updateInfo : (payload) => {
+
+				dispatch (updateInfo(payload));
+			}
+
 		}
 	};
 };

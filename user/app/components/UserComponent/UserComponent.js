@@ -4,7 +4,7 @@ import UserComponentStyles from './assets/UserComponent.scss';
 import SidebarComponent from './SidebarComponent/SidebarComponent.js';
 import MyPostsHomeComponent from './MyPostsHomeComponent/MyPostsHomeComponent.js';
 import NewPostComponent from './NewPostComponent/NewPostComponent.js';
-//import EventHomeComponent from './EventHomeComponent/EventHomeComponent.js';
+import AccountSettingsComponent from '../commonComponents/AccountSettingsComponent/AccountSettingsComponent.js';
 
 class UserComponent extends React.Component {
 
@@ -13,9 +13,8 @@ class UserComponent extends React.Component {
 		super(props);
 		 this.componentHash = {
 		 	'myposts' : MyPostsHomeComponent,
-		 	'newpost' : NewPostComponent
-
-		// 	'accountsettings' : AccountSettingsComponent
+		 	'newpost' : NewPostComponent,
+		 	'accountsettings' : AccountSettingsComponent
 		 };
 		
 	}
@@ -35,6 +34,14 @@ class UserComponent extends React.Component {
 		 	case 'newpost' :  
 							return {newPostActions : this.props.newPostActions, user: this.props.user, metadata:this.props.metadata}
 							break;
+
+			case 'accountsettings' :
+			return {
+				accountManagementActions: this.props.accountManagementActions,
+			 	userInfo : this.props.userInfo,
+			 	metadata : this.props.metadata
+			 };
+			break;
 			
 			default : return {};
 		 }
