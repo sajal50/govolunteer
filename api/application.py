@@ -66,6 +66,51 @@ def signin():
     except Exceptions as e:
         return json.dumps({'message':'Error'})
 
+@app.route('/api/password', methods=['POST'])
+def updatepassword():
+    try:
+        if not request.json or not 'oldpassword' in request.json and not 'newpassword' in request.json:
+            return json.dumps({'message':'Error'})
+        content = request.get_json(silent=True)
+        conn=mysql.connect()
+        dbcursor = conn.cursor();
+        dbcursor.callproc('sp_getPassword',(1,0,0))
+        dbcursor.execute('SELECT @_sp_getPassword_1,@_sp_getPassword_2') 
+        result = dbcursor.fetchone() 
+        #return json.dumps({'message':result})
+        if check_password_hash(result[0], content['oldpassword']):
+            pass
+        else:
+            return json.dumps({'Error':'PASSWORD_INCORRECT'})
+        _hashed_password = generate_password_hash(str(content['newpassword']))
+        dbcursor.callproc('sp_updatePassword',(1,_hashed_password))
+        data = dbcursor.fetchall()
+        if len(data) is 0:
+            conn.commit()
+            return json.dumps({'message':'Password updated successfully!'})
+        else:
+            return json.dumps({'message':str(data[0])})
+    except Exceptions as e:
+        return json.dumps({'message':'Error'})
+
+@app.route('/api/userdetails', methods=['POST'])
+def updateuserdetails():
+    try:
+        if not request.json or not 'desc' in request.json and not 'locationId' in request.json:
+            return json.dumps({'message':'Error'})
+        content = request.get_json(silent=True)
+        conn=mysql.connect()
+        dbcursor = conn.cursor();
+        dbcursor.callproc('sp_updateUserDetails',(1,content['desc'],str(content['locationId'])))
+        data = dbcursor.fetchall()
+        if len(data) is 0:
+            conn.commit()
+            return json.dumps({'message':'User details updated successfully!'})
+        else:
+            return json.dumps({'message':str(data[0])})
+    except Exceptions as e:
+        return json.dumps({'message':'Error'})
+
 @app.route('/api/metadata', methods=['GET'])
 def metadata():
 
@@ -249,6 +294,7 @@ def modelactivity(eventdet):
 
                 }
     return i;    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
