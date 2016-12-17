@@ -28,6 +28,18 @@ mysql = MySQL(app)
 def index():
     return render_template('index.html')
 
+@app.route('/api/getSession', methods=['GET'])
+def getSession():
+    return json.dumps(session['uid'])
+
+@app.route('/api/authz/logout', methods=['POST'])
+def logout():
+    if 'uid' not in session:
+        return json.dumps({'message':'User not logged in!!'})
+    else:
+        session.pop('uid', None)
+        return json.dumps({'message':'User has been logged out'})
+
 @app.route('/api/authz/signup', methods=['POST'])
 def signup():
     try:
@@ -42,30 +54,34 @@ def signup():
         if  user_id[0][0] is not 0:
             conn.commit()
             content['uid']=user_id[0]
+            session['uid']=user_id[0]
             return json.dumps(content)
         else:
-            return json.dumps({'errors':str(user_id[0])})
+            return json.dumps({'error':str(user_id[0])})
     except Exception as e:
         return json.dumps({'error':'Error1'+str(e)})
 
 @app.route('/api/authz/signin', methods=['POST'])
 def signin():
     try:
-        if not request.json or not 'EmailId' in request.json and not 'password' in request.json:
-            return json.dumps({'message':'Error'})
+        if not request.json or not 'email' in request.json and not 'password' in request.json:
+            return json.dumps({'message':'Bad Input'})
         content = request.get_json(silent=True)
         conn=mysql.connect()
         dbcursor = conn.cursor();
-        dbcursor.callproc('sp_loginUser',(content['EmailId'],0,0))
-        dbcursor.execute('SELECT @_sp_loginUser_1,@_sp_loginUser_2') 
-        result = dbcursor.fetchone()
-        if check_password_hash(result[0], content['password']):
+        #return json.dumps(content['email'])
+        dbcursor.callproc('sp_loginUser',(str(content['email']),))
+        result = dbcursor.fetchall()
+        #return json.dumps(result[0])
+        if check_password_hash(result[0][3], content['password']):
             conn.commit()
-            return json.dumps({'message':'Logged In'})
+            newuser=modelusersignin(result)
+            session['uid']=newuser['uid']
+            return json.dumps(newuser)
         else:
             return json.dumps({'message':'Could not log in!!'+str(result[1])})
-    except Exceptions as e:
-        return json.dumps({'message':'Error'})
+    except Exception as e:
+        return json.dumps({'error':str(e)})
 
 @app.route('/api/password', methods=['POST'])
 def updatepassword():
@@ -277,11 +293,22 @@ def approveactivity():
 
 def modeluser(usercred):
     i = {
-                    'uid':1,
-                    'username':usercred[0][0],
+                    'uid':usercred[0][0],
+                    'username':usercred[0][1],
                     'emailid':usercred[0][1],
                     'pic':usercred[0][2],
                     'UserType':usercred[0][3],'Description':usercred[0][4],'City':usercred[0][5]
+
+                }
+    return i;
+
+def modelusersignin(usercred):
+    i = {
+                    'uid':int(usercred[0][0]),
+                    'name':str(usercred[0][1]),
+                    'email':str(usercred[0][2]),
+                    'pic':str(usercred[0][4]),
+                    'usertype':int(usercred[0][5]),'desc':str(usercred[0][6]),'locationId':usercred[0][7]
 
                 }
     return i;
