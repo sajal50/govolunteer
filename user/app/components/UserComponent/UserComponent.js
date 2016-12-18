@@ -49,9 +49,8 @@ class UserComponent extends React.Component {
 
 	render () {
 
-		let {isLoggedInChecked} = this.props.userInfo;
-		isLoggedInChecked = 1;
-		if (!isLoggedInChecked) {
+		let {isLoggedIn} = this.props.userInfo;
+		if (!isLoggedIn) {
 			return (<div>Loading..</div>);
 		}
 		else {

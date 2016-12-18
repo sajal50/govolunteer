@@ -16,9 +16,9 @@ export function updatePassword (oldpassword,newpassword) {
 
 					method :'POST',
 					headers: {
-						'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-					},
-					body: serialize({"oldpassword":oldpassword,"newpassword":newpassword})
+						'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({"oldpassword":oldpassword,"newpassword":newpassword})
 				}).then((response) => {
 					return response.json();
 				}).then((json)=> {
@@ -61,9 +61,9 @@ export function updateInfo (payload) {
 
 					method :'POST',
 					headers: {
-						'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+						'Content-Type': 'application/json'
 					},
-					body: serialize(payload)
+				body: JSON.stringify(payload)
 				}).then((response) => {
 					return response.json();
 				}).then((json)=> {

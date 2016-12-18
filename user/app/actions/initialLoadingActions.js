@@ -19,13 +19,12 @@ export function checkInit () {
 				return response.json();
 
 			}).then((json) => {
-				
+
 				dispatch ({
 
 					'type' : actionConstants.SET_USER_INFO,
 					payload: {isLoggedInChecked:true}
 				});
-
 
 
 				if (!json.error) {
@@ -49,6 +48,7 @@ export function checkInit () {
 						return Promise.resolve(json.error);
 					}
 				}
+
 
 			});
 		} else {
@@ -233,11 +233,12 @@ export function logout () {
 			body: JSON.stringify ({})
 		})
 		.then((response) => {
-			location.reload();
-			return response.json();
+			
 		}).then((json)=> {
 
 
+			location.reload();
+			return response.json();
 
 			console.log('here');
 			//TODO- CHECK FOR 200
