@@ -13,9 +13,11 @@ class EventHomeComponent extends React.Component {
 
 		super(props);
 		this.state = {
-			eventSelected : null
+			eventSelected : null,
+			showDetailsModal : false
 		};
 		this.selectEvent = this.selectEvent.bind(this);
+		this.closeDetailsModal = this.closeDetailsModal.bind(this);
 	}
 
 	componentWillMount () {
@@ -28,8 +30,13 @@ class EventHomeComponent extends React.Component {
 
 		let event = _.find(events, function(singleEvent) { return singleEvent.eventId == eventId; });
 		this.setState ({
-			eventSelected : event
+			eventSelected : event,
+			showDetailsModal : true
 		});
+	}
+
+	closeDetailsModal() {
+		this.setState({showDetailsModal:false});
 	}
 
 	render () {
@@ -43,15 +50,11 @@ class EventHomeComponent extends React.Component {
 				</div>
 				<br/>
 				<div>
-					<div className = 'col-xs-4' >
+
 						<AllEventsListComponent selectEvent = {this.selectEvent} events = {events} />
-
-					</div>
-
-					<div className = 'col-xs-8' >
-
-						<SingleEventDetailComponent eventSelected = {this.state.eventSelected} />
-					</div>
+						<SingleEventDetailComponent showDetailsModal = {this.state.showDetailsModal}
+						closeDetailsModal = {this.closeDetailsModal}
+						eventSelected = {this.state.eventSelected} />
 				</div>
 
 			</div>
