@@ -3,6 +3,7 @@ import sys
 import os
 import json
 import time
+from numbers import Number
 import config as Config
 from flask import Flask
 from pprint import pprint
@@ -60,7 +61,10 @@ def signup():
         conn=mysql.connect()
         dbcursor = conn.cursor()
         dbcursor.callproc('sp_createUser',(content['name'],content['email'],_hashed_password,content['type']))
+        
         user_id = dbcursor.fetchall()
+        if not isinstance(user_id[0][0],Number):
+            return json.dumps({'error':'USERNAME_TAKEN'})
         if  user_id[0][0] is not 0:
             conn.commit()
             content['uid']=user_id[0][0]
