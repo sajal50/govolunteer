@@ -77,7 +77,7 @@ def signup():
         else:
             return json.dumps({'error':str(user_id[0])})
     except Exception as e:
-        return json.dumps({'error':'Error1'+str(e)})
+        return json.dumps({'error':str(e)})
 
 @app.route('/api/authz/signin', methods=['POST'])
 def signin():
@@ -220,7 +220,7 @@ def userpost():
     else:
         return json.dumps({'message':str(data[0])})
    except Exception as e:
-        return json.dumps({'error1':str(e)})
+        return json.dumps({'error':str(e)})
 
 @app.route('/api/event', methods=['POST'])
 def newevent():
@@ -265,7 +265,7 @@ def newevent():
        conn.commit()
        return json.dumps(content)
    except Exception as e:
-       return json.dumps({'error1':str(e)})
+       return json.dumps({'error':str(e)})
 
 
 @app.route('/api/event', methods=['GET'])
@@ -299,7 +299,7 @@ def getallevent():
             items_list1.append(event)
        return json.dumps(items_list1)
    except Exception as e:
-       return json.dumps({'message':'Error1'+str(e)})
+       return json.dumps({'error':str(e)})
 
 @app.route('/api/userpost', methods=['GET'])
 def userpostget():
@@ -331,7 +331,7 @@ def userpostget():
        return json.dumps(items_list1)
             
    except Exception as e:
-         return json.dumps({'Error1':str(e)})
+         return json.dumps({'error':str(e)})
 
 
 
@@ -351,7 +351,7 @@ def approveactivity():
     conn.commit()
     return json.dumps({'message':'Works'})
    except Exception as e:
-       return json.dumps({'message':'Error1'+str(e)})
+       return json.dumps({'error':str(e)})
 
 @app.route ('/api/profilePic', methods=['POST'])
 def profilePic():
@@ -378,7 +378,7 @@ def profilePic():
       conn.commit()
       return Response(json.dumps({"pic" :url }), content_type='application/json')
     except Exception as e:
-       return json.dumps({'message':'Error1'+str(e)})
+       return json.dumps({'error':str(e)})
 
 
 def modeluser(usercred):
