@@ -84,11 +84,13 @@ class PasswordUpdateComponent extends React.Component {
 
 
 		
-		this.props.accountManagementActions.updatePassword(
+		this.props.accountManagementActions.updatePassword({
 
-			this.oldpasswordRefSave.value,
-			this.newpasswordRefSave.value
-		);
+			oldPassword : this.oldpasswordRefSave.value,
+			newPassword : this.newpasswordRefSave.value
+
+
+		});
 
 		this.oldpasswordRefSave.value = '';
 		this.newpasswordRefSave.value = '';
