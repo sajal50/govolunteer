@@ -375,6 +375,7 @@ def profilePic():
       dbcursor = conn.cursor();
       dbcursor.callproc('sp_updatePicUrl',(session['uid'],url))
       allrequests = dbcursor.fetchall()
+      conn.commit()
       return Response(json.dumps({"pic" :url }), content_type='application/json')
     except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
