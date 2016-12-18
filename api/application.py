@@ -223,12 +223,7 @@ def newevent():
        #activities=content['activities']
        conn=mysql.connect()
        dbcursor = conn.cursor();
-       print "Before"
-       print session['uid']
-       print content['title']
-       print content['desc']
-       print content['startTime']
-       print content['endTime']
+       
 
        dbcursor.callproc('sp_createEvent',(session['uid'],content['title'],content['desc'],content['startTime'],content['endTime'],0))
        dbcursor.execute('SELECT @_sp_createEvent_5') 
@@ -279,18 +274,19 @@ def getallevent():
                 return json.dumps([])
        for row in allevents:
             event=modelevent(row)
-            dbcursor.callproc('sp_getActivity',(event['eventid'],))
+            dbcursor.callproc('sp_getActivity',(event['eventId'],))
             allactivities = dbcursor.fetchall()
             # if len(allactivities) is 0:
             #     return json.dumps([])
             items_list2=[]
             for activity in allactivities:
                 activity=modelactivity(activity)
-                dbcursor.callproc('sp_getUserFromActivity',(activity['activityid'],))
+                dbcursor.callproc('sp_getUserFromActivity',(activity['activityId'],))
                 data1 = dbcursor.fetchall()
                 if len(data1) is 0:
-                    return json.dumps({'message':'User does not exist'})
-                user=modeluser(data1)
+                    user=None
+                else:
+                    user=modeluser(data1)
                 activity['user']=user
                 items_list2.append(activity)
             event['activities']=items_list2
@@ -384,7 +380,7 @@ def modeluser(usercred):
                     'name':usercred[0][1],
                     'email':usercred[0][1],
                     'pic':usercred[0][2],
-                    'type':usercred[0][3],'Description':usercred[0][4],'locationId':usercred[0][5]
+                    'type':usercred[0][3],'desc':usercred[0][4],'locationId':usercred[0][5]
 
                 }
     return i;
@@ -402,11 +398,11 @@ def modelusersignin(usercred):
 
 def modelevent(eventdet):
     i = {
-                    'eventid':int(eventdet[0]),
+                    'eventId':int(eventdet[0]),
                     'title':str(eventdet[1]),
-                    'desc':str(eventdet[2]),
-                    'starttime':str(eventdet[3]),
-                    'endtime':str(eventdet[4]),
+                    'desc':str(eventdet[3]),
+                    'startTime':str(eventdet[4]),
+                    'endTime':str(eventdet[5]),
                     'activities':None
 
                 }
@@ -414,11 +410,12 @@ def modelevent(eventdet):
 
 def modelactivity(eventdet):
     i = {
-                    'activityid':int(eventdet[0]),
-                    'title':str(eventdet[1]),
-                    'desc':str(eventdet[2]),
-                    'starttime':str(eventdet[3]),
-                    'endtime':str(eventdet[4]),
+                    'activityId':int(eventdet[0]),
+                    'title':str(eventdet[4]),
+                    'desc':str(eventdet[5]),
+                    'startTime':str(eventdet[2]),
+                    'endTime':str(eventdet[3]),
+                    'categoryId':int(eventdet[7]),
                     'user':None
 
                 }
