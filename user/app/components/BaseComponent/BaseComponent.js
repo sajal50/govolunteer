@@ -38,7 +38,7 @@ class BaseComponent extends React.Component {
 
 	render () {
 
-		let {isLoggedIn} = this.props;
+		let {isLoggedIn,name, pic} = this.props.userInfo;
 		return (
 			<div >
 				<div styleName = 'base-header'>
@@ -48,9 +48,20 @@ class BaseComponent extends React.Component {
 					<div styleName = 'logout-container'>
 							{
 								(isLoggedIn) ? 
-									(<input type = 'button' 
-										onClick = {() => this.props.logout()}
-										className = 'btn btn-primary' value = "Logout" />)
+									(	<span>
+											{
+												(pic != 'None' || !pic) ?  
+													(<img 
+													src = {pic}/>
+													) : (null)
+											}
+											<span styleName = 'welcome-text'>
+												Welcome, {name}.
+											</span>
+											<input type = 'button'  styleName = 'logout'
+								 			onClick = {() => this.props.logout()} value = 'Logout'/>
+							 			</span>
+									)
 									:
 									(null)
 

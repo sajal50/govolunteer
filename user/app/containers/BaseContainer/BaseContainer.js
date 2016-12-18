@@ -4,7 +4,7 @@ import {logout, fetchMetadata} from '../../actions/initialLoadingActions.js';
 
 const mapStateToProps = (state) => {
 	return {
-		isLoggedIn : state.userInfo.isLoggedIn,
+		userInfo : state.userInfo,
 		notifConfig : state.notifConfig
 	};
 };
