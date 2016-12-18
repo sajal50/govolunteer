@@ -11,6 +11,7 @@ from flask import Flask, request, render_template, g, redirect, Response, make_r
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
+import boto3
 
 application = Flask(__name__)  
 app = application
