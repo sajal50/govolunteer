@@ -33,7 +33,7 @@ class SidebarComponent extends React.Component {
 
 		return (
 
-			<div styleName = 'sidebar'>
+			<div>
 				 <div onClick = {()=> this.onClickMyPosts()} >
 				 	My Posts
 				 </div>
