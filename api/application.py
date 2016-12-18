@@ -181,7 +181,7 @@ def metadata():
                 items_list2.append(i)
        return json.dumps({'locations':items_list1,'categories':items_list2})
    except Exception as e:
-       return json.dumps({'message':'Error'})
+       return json.dumps({'error':str(e)})
 
 
 @app.route('/api/search', methods=['GET'])
