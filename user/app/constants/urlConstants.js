@@ -11,12 +11,12 @@ let urlConstants = () => {
 		"logout" : baseUrl + 'api/authz/logout',
 		"metadata" : baseUrl + 'api/metadata',
 		"event" : baseUrl + 'api/event',
-		"post" : baseUrl + 'post',
-		"userpost" : baseUrl + 'userpost',
-		"password": baseUrl + 'password',
-		"responsepost" : baseUrl + 'responsepost',
-		"userdetails" : baseUrl + 'userdetails',
-		"profilePic" : baseUrl + 'profilePic'
+		"post" : baseUrl + 'api/userpost',
+		"userpost" : baseUrl + 'api/userpost',
+		"password": baseUrl + 'api/password',
+		"responsepost" : baseUrl + 'api/responsepost',
+		"userdetails" : baseUrl + 'api/userdetails',
+		"profilePic" : baseUrl + 'api/profilePic'
 	};
 
 
