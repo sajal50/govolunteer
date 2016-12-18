@@ -208,7 +208,7 @@ class NewEventFormComponent extends React.Component {
 							{activitiesView}
 
 							<div styleName = 'add-button-container'>
-								<input type = 'button'  styleName = 'button'
+								<input type = 'button'  styleName = 'button add-button'
 							 	onClick = {() => this.onClickAddActivity()} value = 'Add'/>
 
 							</div>
