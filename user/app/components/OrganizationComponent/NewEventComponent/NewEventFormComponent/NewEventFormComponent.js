@@ -154,42 +154,83 @@ class NewEventFormComponent extends React.Component {
 		let locations = this.getLocations();
 		return (
 			<div>
-				<div>
-					Title : <br/><input type = 'text' ref = {(ref) => this.titleRef = ref}/>
-				</div>
-				<div>
-					Description : <br/><textarea ref = {(ref) => this.descRef = ref}/>
-				</div>
-				<div>
-					Start : <br/><Datetime  onChange = {(date) => this.startTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
-				</div>
-				<div>
-					End : <br/><Datetime onChange = {(date) => this.endTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
-				</div>
-				<div>
-					Location : <br/>
-					<select
-					ref = {(ref) => this.locationRef = ref} >
-						{locations}
-					</select>
-				</div>
-				<div>
-					Activities : <br/>
-					{activitiesView}
+				<div styleName="form">
+					<div id="login">   
+			          <h3 styleName ='welcome-back-text'>New Event</h3>
+			          
+			          <form>
+			          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Title<span styleName="req" >*</span>
+				            </label>
 
-					<div>
-						<input type = 'button'  className = 'btn btn-success'
-					 	onClick = {() => this.onClickAddActivity()} value = 'Add'/>
+				            	<input styleName='text-fields' autoComplete={'off'}
+				            	type = 'text' ref = {(ref) => this.titleRef = ref}/>
+				        </div>
 
-					</div>
-				</div>
-				<div>
-					<input type = 'button'  className = 'btn btn-success'
-					 onClick = {() => this.onClickCreate()} value = 'Create'/>
-				</div>
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Description<span styleName="req" >*</span>
+				            </label>
+				            	<textarea styleName='textarea-field' ref = {(ref) => this.descRef = ref}/>
+				        </div>
+				        <div styleName="field-wrap">
+				       		<label styleName='labels-input'>
+				              Start Time<span styleName="req" >*</span>
+				            </label>
+							 <Datetime inputProps = {{className : "time"}}
+							 onChange = {(date) => this.startTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
+						</div>
+						<div styleName="field-wrap">
+							<label styleName='labels-input'>
+				              End Time<span styleName="req" >*</span>
+				            </label>
+
+							<Datetime inputProps = {{className : "time"}}
+							onChange = {(date) => this.endTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
+						</div>
+						<div styleName="field-wrap">
+							<label styleName='labels-input'>
+				              Location<span styleName="req" >*</span>
+				            </label>
+							<div>
+								<select
+								ref = {(ref) => this.locationRef = ref} >
+									{locations}
+								</select>
+							</div>
+						</div>
+						<div>
+							<label styleName='labels-input bigger-label'>
+				              Activities<span styleName="req" >*</span>
+				            </label>
+							{activitiesView}
+
+							<div styleName = 'add-button-container'>
+								<input type = 'button'  styleName = 'button add-button'
+							 	onClick = {() => this.onClickAddActivity()} value = 'Add'/>
+
+							</div>
+						</div>
+
+
+
+				        <div styleName='gap-up'>
+				          <div styleName = 'gap'>
+					          <input type = 'button' styleName = 'button button-block'
+					 			onClick = {() => this.onClickCreate()} value = 'Create'/>
+				          </div>
+				          
+						</div>
+			          </form>
+
+			        </div>
+			      
+				</div> 
 			</div>
 			);
 	}
 }
 
-export default CSSModules(NewEventFormComponent, NewEventFormComponentStyle);
+export default CSSModules(NewEventFormComponent, NewEventFormComponentStyle, {allowMultiple:true});

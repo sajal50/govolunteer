@@ -26,23 +26,19 @@ class SidebarComponent extends React.Component {
 
 
 	}
-	onClickNotifications () {
-		console.log('clicked');
-	}
+	
 	render () {
 
 		return (
 
-			<div>
-				<div onClick = {()=> this.onClickEvents()} >
+			<div styleName = 'sidebar'>
+				<div styleName = 'options' onClick = {()=> this.onClickEvents()} >
 					Events
 				</div>
-				<div onClick = {()=> this.onClickAccountSettings()}>
+				<div styleName = 'options' onClick = {()=> this.onClickAccountSettings()}>
 					Account Settings
 				</div>
-				<div onClick = {()=> this.onClickNotifications()}>
-					Notifications
-				</div>
+				
 
 			</div>
 

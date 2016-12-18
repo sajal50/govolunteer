@@ -61,12 +61,12 @@ class OrganizationComponent extends React.Component {
 			let propsToBePassed = this.getPropsToBePassed();
 			return (
 
-				<div>
-					<div className = 'col-xs-3'>
+				<div styleName= 'organization-container'>
+					<div styleName = 'sidebar-container'>
 						<SidebarComponent/>
 					</div>
 					
-					<div className = 'col-xs-9'>
+					<div styleName='event-container'>
 
 						<ComponentToBeLoaded {...propsToBePassed}/>
 						
