@@ -2,6 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import SingleActivityFormComponentStyle from './assets/SingleActivityFormComponent.scss';
 import Datetime from 'react-datetime';
+import moment from  'moment';
 
 class SingleActivityFormComponent extends React.Component {
 
@@ -53,13 +54,12 @@ class SingleActivityFormComponent extends React.Component {
 	}
 	onChangeStartDate (date) {
 
-		this.startDate = date.toDate();
+		this.startDate = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss');
 		this.onChange();
 
 	}
 	onChangeEndDate (date) {
-
-		this.endDate = date.toDate();
+		this.endDate = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss');
 		this.onChange();
 	}
 	render () {

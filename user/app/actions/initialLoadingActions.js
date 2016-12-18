@@ -26,7 +26,11 @@ export function checkInit () {
 					payload: {isLoggedInChecked:true}
 				});
 
+
+
 				if (!json.error) {
+
+					json = changeTypeOfPersonToNumberEnum(json);
 
 					json.isLoggedIn = true;
 					
@@ -69,6 +73,11 @@ export function checkInit () {
 }
 
 
+function changeTypeOfPersonToNumberEnum (json) {
+
+	json.type = (+json.type == 0) ? 'PERSON' : 'ORGANIZATION';
+	return json;
+}
 
 export function login (email, password) {
 
@@ -81,9 +90,9 @@ export function login (email, password) {
 
 				method :'POST',
 				headers: {
-					'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+					'Content-Type': 'application/json'
 				},
-				body: serialize({email, password})
+				body: JSON.stringify({email, password})
 			}).then((response) => {
 				return response.json();
 			}).then((json)=> {
@@ -93,7 +102,7 @@ export function login (email, password) {
 				if (!json.error) {
 
 					json.isLoggedIn = true;
-
+					json = changeTypeOfPersonToNumberEnum(json);
 
 					dispatch ({
 
@@ -108,7 +117,7 @@ export function login (email, password) {
 
 				} else {
 
-					if (json.error == "INCORRECT_CREDENTIALS") {
+					if (json.error == "USER_DOES_NOT_EXIST") {
 
 						dispatch (triggerNotification({
 							message : 'Incorrect Crendentials',
@@ -137,6 +146,14 @@ export function login (email, password) {
 
 }
 
+function changeTypeOfPersonEnumToNumber (payload) {
+
+	payload.type = (payload.type == 'PERSON')? 0 : 1
+	return payload;
+
+
+}
+
 export function redirectAccordingToRole (type) {
 	if (type == 'PERSON') {
 		hashHistory.push('user/myposts');	
@@ -148,20 +165,16 @@ export function redirectAccordingToRole (type) {
 export function signUp (payload)  {
 
 	return function (dispatch, getState)  {
-		
-		payload.userName = payload.username;
-		payload.emailId = "sample";
-		payload.maxScore = 0;
-		payload.maxLevelReached = 1;
-		delete payload["username"];
+
+		payload = changeTypeOfPersonEnumToNumber(payload);
 
 		kfetch(urlConstants.signUp, {
 
 			method :'POST',
 			headers: {
-				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+					'Content-Type': 'application/json'
 			},
-			body: serialize (payload)
+			body: JSON.stringify (payload)
 		}).then((response) => {
 			return response.json();
 		}).then((json)=> {
@@ -172,7 +185,7 @@ export function signUp (payload)  {
 
 				json.isLoggedIn = true;
 				
-
+				json = changeTypeOfPersonToNumberEnum(json);
 
 				dispatch ({
 
@@ -211,7 +224,14 @@ export function logout () {
 
 	return function (dispatch, getState)  {
 
-		kfetch(urlConstants.logout)
+		kfetch(urlConstants.logout ,{
+
+			method :'POST',
+			headers: {
+					'Content-Type': 'application/json'
+			},
+			body: JSON.stringify ({})
+		})
 		.then((response) => {
 			location.reload();
 			return response.json();
