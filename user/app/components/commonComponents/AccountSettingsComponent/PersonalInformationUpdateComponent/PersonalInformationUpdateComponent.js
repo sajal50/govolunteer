@@ -56,12 +56,23 @@ class PersonalInformationUpdateComponent extends React.Component {
 				</div>
 				<div>
 					Location : <br/>
-					<select
-					value = {this.state.locationId}
-					onChange = {this.handleLocationOnChange}
-					ref = {(ref) => this.locationRef = ref} >
-						{locations}
-					</select>
+					{
+						(this.state.locationId) ?
+						<select
+						value = {this.state.locationId}
+						onChange = {this.handleLocationOnChange}
+						ref = {(ref) => this.locationRef = ref} >
+							{locations}
+						</select> :
+
+						<select
+						onChange = {this.handleLocationOnChange}
+						ref = {(ref) => this.locationRef = ref} >
+							{locations}
+						</select>
+
+					}
+					
 				</div>
 
 				<input type='button' onClick = {() => this.onClickUpdate()} className = 'btn btn-success' value = 'Update' />

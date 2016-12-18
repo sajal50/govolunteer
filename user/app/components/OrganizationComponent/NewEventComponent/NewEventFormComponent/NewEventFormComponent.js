@@ -67,6 +67,7 @@ class NewEventFormComponent extends React.Component {
 
 			eventId: null,
 			title: this.titleRef.value,
+			desc : this.descRef.value,
 			startTime : this.startTime,
 			endTime : this.endTime,
 			locationId : this.locationRef.value,
