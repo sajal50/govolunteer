@@ -13,6 +13,7 @@ from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
 import boto3
+import hashlib
 
 application = Flask(__name__)  
 app = application
@@ -352,8 +353,8 @@ def approveactivity():
    except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
 
-@app.route ('/api/sns', methods=['POST'])
-def sns():
+@app.route ('/api/profilePic', methods=['POST'])
+def profilePic():
     try:
       f = request.files['pic']
       m = hashlib.md5()
@@ -361,11 +362,11 @@ def sns():
       hashFileName = m.hexdigest()
       hashFileName = hashFileName + f.filename
 
-      s3.upload_fileobj(f, "govol", hashFileName)
+      s3.upload_fileobj(f, Config.BUCKET, hashFileName)
       url_with_query = s3.generate_presigned_url(
           ClientMethod='get_object',
           Params={
-              'Bucket': 'govol',
+              'Bucket': Config.BUCKET,
               'Key': hashFileName
           }
       )
@@ -374,7 +375,7 @@ def sns():
       dbcursor = conn.cursor();
       dbcursor.callproc('sp_updatePicUrl',(session['uid'],url))
       allrequests = dbcursor.fetchall()
-      return Response(json.dumps({"message" :url }), content_type='application/json')
+      return Response(json.dumps({"pic" :url }), content_type='application/json')
     except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
 
