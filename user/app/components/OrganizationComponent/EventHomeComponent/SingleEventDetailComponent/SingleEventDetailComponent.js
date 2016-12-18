@@ -30,8 +30,14 @@ class SingleEventDetailComponent extends React.Component {
 					{
 						(singleActivity.user) ?
 						<div>
-							User Assigned : {singleActivity.user.name}
-							Status : {singleActivity.user.status}
+							<div>
+
+								User Assigned : {singleActivity.user.name}
+							</div>
+							<div>
+
+								Status : {singleActivity.status}
+							</div>
 						</div>
 						:
 						<div>
