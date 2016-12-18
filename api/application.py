@@ -22,7 +22,7 @@ s3 = boto3.client('s3')
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'govol'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql = MySQL(app)
@@ -246,17 +246,18 @@ def newevent():
             dbcursor.callproc('sp_getFeasibleUser',(activity['categoryId'],activity['startTime'],activity['endTime'],content['locationId']))
             data1 = dbcursor.fetchall()
             if len(data1) is 0:
-                return json.dumps({'message':'User does not exist'})
-            user=modeluser(data1)
-            activity['user']=user;
-            #return json.dumps(activity['user']['uid'])
-            userids=activity['user']['uid']
-            #return json.dumps(userids)
-            dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,content['locationId'],data1[0][6],0))
+                user=None
+                activity['user']=None;
+                dbcursor.callproc('sp_createActivity',(None,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,content['locationId'],None,0))
+            else:
+                user=modeluser(data1)
+                activity['user']=user;
+                userids=activity['user']['uid']
+                dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,content['locationId'],data1[0][6],0))
             dbcursor.execute('SELECT @_sp_createActivity_9')
             result2 = dbcursor.fetchone()
             if result2[0] != 0:
-                activity['activityid']=result2[0]
+                activity['activityId']=result2[0]
             else:
                 return json.dumps({'message':str(result2)})
        content['activities']=activities
