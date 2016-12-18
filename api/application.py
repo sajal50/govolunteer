@@ -89,22 +89,25 @@ def signin():
         #return json.dumps(content['email'])
         dbcursor.callproc('sp_loginUser',(str(content['email']),))
         result = dbcursor.fetchall()
+        #return json.dumps(content['password'])
         if len(result) is 0:
           return json.dumps({'error':'USER_DOES_NOT_EXIST'})
-        if check_password_hash(result[0][3], content['password']):
+        if check_password_hash(str(result[0][3]), str(content['password'])):
             conn.commit()
+            #return json.dumps(result)
             newuser=modelusersignin(result)
+
             session['uid']=newuser['uid']
             return json.dumps(newuser)
         else:
-            return json.dumps({'message':'Could not log in!!'+str(result[1])})
+            return json.dumps({'error':'INCORRECT_PASSWORD'})
     except Exception as e:
-        return json.dumps({'error1':str(e)})
+        return json.dumps({'error':str(e)})
 
 @app.route('/api/password', methods=['POST'])
 def updatepassword():
     try:
-        if not request.json or not 'oldpassword' in request.json and not 'newpassword' in request.json:
+        if not request.json or not 'oldPassword' in request.json and not 'newPassword' in request.json:
             return json.dumps({'message':'Error'})
         content = request.get_json(silent=True)
         conn=mysql.connect()
@@ -113,20 +116,22 @@ def updatepassword():
         dbcursor.execute('SELECT @_sp_getPassword_1,@_sp_getPassword_2') 
         result = dbcursor.fetchone()
         #return json.dumps({'message':result})
-        if check_password_hash(result[0], content['oldpassword']):
+        if check_password_hash(result[0], content['oldPassword']):
             pass
         else:
             return json.dumps({'Error':'PASSWORD_INCORRECT'})
-        _hashed_password = generate_password_hash(str(content['newpassword']))
+        _hashed_password = generate_password_hash(str(content['newPassword']))
         dbcursor.callproc('sp_updatePassword',(session['uid'],_hashed_password))
+
         data = dbcursor.fetchall()
+        #return json.dumps({'message1':data})
         if len(data) is 0:
             conn.commit()
             return json.dumps({'message':'Password updated successfully!'})
         else:
             return json.dumps({'message':str(data[0])})
     except Exception as e:
-        return json.dumps({'message':str(e)})
+        return json.dumps({'error':str(e)})
 
 @app.route('/api/userdetails', methods=['POST'])
 def updateuserdetails():

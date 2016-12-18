@@ -7,7 +7,7 @@ import {kfetch} from '../util/util.js';
 import request from 'superagent';
 
 
-export function updatePassword (oldpassword,newpassword) {
+export function updatePassword (payload) {
 
 
 	return function (dispatch, getState) {
@@ -18,7 +18,7 @@ export function updatePassword (oldpassword,newpassword) {
 					headers: {
 						'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({"oldpassword":oldpassword,"newpassword":newpassword})
+				body: JSON.stringify(payload)
 				}).then((response) => {
 					return response.json();
 				}).then((json)=> {
