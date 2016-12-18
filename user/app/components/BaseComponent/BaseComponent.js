@@ -2,6 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import BaseStyle from './assets/BaseComponent.scss';
 import NotificationSystem from 'react-notification-system';
+import imageLogo from './assets/logos.png';
 
 
 class BaseComponent extends React.Component {
@@ -40,11 +41,11 @@ class BaseComponent extends React.Component {
 		let {isLoggedIn} = this.props;
 		return (
 			<div >
-				<div styleName = 'base-header'  className = 'col-xs-12'>
-					<div styleName = 'app-name' className = 'col-xs-3'>
-						goVolunteer
+				<div styleName = 'base-header'>
+					<div>
+						<img styleName = 'logo' src = {imageLogo} />
 					</div>
-					<div className = 'col-xs-9 text-right'>
+					<div>
 							{
 								(isLoggedIn) ? 
 									(<input type = 'button' 
@@ -74,4 +75,4 @@ class BaseComponent extends React.Component {
 	}
 }
 
-export default CSSModules(BaseComponent, BaseStyle);
+export default CSSModules(BaseComponent, BaseStyle,);
