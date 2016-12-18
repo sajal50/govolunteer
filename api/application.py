@@ -263,8 +263,7 @@ def getallevent():
    try:
        conn=mysql.connect()
        dbcursor = conn.cursor();
-       orgid=1
-       dbcursor.callproc('sp_getEvents',(orgid,))
+       dbcursor.callproc('sp_getEvents',(session['uid'],))
        allevents = dbcursor.fetchall()
        items_list1=[]
        if len(allevents) is 0:
@@ -273,8 +272,8 @@ def getallevent():
             event=modelevent(row)
             dbcursor.callproc('sp_getActivity',(event['eventid'],))
             allactivities = dbcursor.fetchall()
-            if len(allactivities) is 0:
-                return json.dumps({'message':'No Events Present'})
+            # if len(allactivities) is 0:
+            #     return json.dumps([])
             items_list2=[]
             for activity in allactivities:
                 activity=modelactivity(activity)
