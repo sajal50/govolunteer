@@ -94,15 +94,8 @@ export function acceptRequest (payload) {
 
 
 			if (!json.error) {
-console.log(json);
+				console.log(json);
 				fetchPosts();
-				// dispatch(triggerNotification({
-				// 			message : 'Post created successfully',
-				// 			level: 'success'
-				// 		}));
-				// hashHistory.push('user/myposts');					
-
-			
 
 			}
 

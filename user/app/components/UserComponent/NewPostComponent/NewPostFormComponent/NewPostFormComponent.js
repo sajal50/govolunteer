@@ -4,6 +4,7 @@ import NewPostFormComponentStyle from './assets/NewPostFormComponent.scss';
 import  './assets/datetime.css';
 import Datetime from 'react-datetime';
 import _ from 'lodash';
+import moment from 'moment';
 
 class NewPostFormComponent extends React.Component {
 
@@ -78,10 +79,10 @@ class NewPostFormComponent extends React.Component {
 					Description : <br/><textarea ref = {(ref) => this.descRef = ref}/>
 				</div>
 				<div>
-					Start Time : <br/><Datetime  onChange = {(date) => this.startTime = date.toDate()} timeConstraints = {{minutes: { step: 30 }}} />
+					Start Time : <br/><Datetime  onChange = {(date) => this.startTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
 				</div>
 				<div>
-					End Time: <br/><Datetime onChange = {(date) => this.endTime = date.toDate()} timeConstraints = {{minutes: { step: 30 }}} />
+					End Time: <br/><Datetime onChange = {(date) => this.endTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
 				</div>
 				<div>
 					Category : <br/>
