@@ -21,7 +21,7 @@ s3 = boto3.client('s3')
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'govol'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql = MySQL(app)
@@ -222,9 +222,14 @@ def newevent():
        #activities=content['activities']
        conn=mysql.connect()
        dbcursor = conn.cursor();
-       
-       dbcursor.callproc('sp_createEvent',(1,content['title'],content['description'],content['startDate'],content['endDate'],0))
+       print "Before"
+       print session['uid']
+       print content['title']
+       print content['desc']
+       print content['startTime']
+       print content['endTime']
 
+       dbcursor.callproc('sp_createEvent',(session['uid'],content['title'],content['desc'],content['startTime'],content['endTime'],0))
        dbcursor.execute('SELECT @_sp_createEvent_5') 
        result = dbcursor.fetchone()
        if result[0] != 0:
@@ -233,10 +238,11 @@ def newevent():
        else:
           return json.dumps({'message':str(result)})
        eventid=result[0]
+       content['eventId']=eventid
        activities=content['activities']
        for activity in activities:
             #return json.dumps(activity)
-            dbcursor.callproc('sp_getFeasibleUser',(activity['categoryId'],activity['startTime'],activity['endTime'],activity['cityid']))
+            dbcursor.callproc('sp_getFeasibleUser',(activity['categoryId'],activity['startTime'],activity['endTime'],content['locationId']))
             data1 = dbcursor.fetchall()
             if len(data1) is 0:
                 return json.dumps({'message':'User does not exist'})
@@ -245,7 +251,7 @@ def newevent():
             #return json.dumps(activity['user']['uid'])
             userids=activity['user']['uid']
             #return json.dumps(userids)
-            dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,activity['cityid'],data1[0][6],0))
+            dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,content['locationId'],data1[0][6],0))
             dbcursor.execute('SELECT @_sp_createActivity_9')
             result2 = dbcursor.fetchone()
             if result2[0] != 0:
@@ -256,7 +262,7 @@ def newevent():
        conn.commit()
        return json.dumps(content)
    except Exception as e:
-       return json.dumps({'message':'Error1'})
+       return json.dumps({'error1':str(e)})
 
 
 @app.route('/api/event', methods=['GET'])
@@ -372,11 +378,11 @@ def sns():
 
 def modeluser(usercred):
     i = {
-                    'uid':usercred[0][0],
-                    'username':usercred[0][1],
-                    'emailid':usercred[0][1],
+                    'uid':session['uid'],
+                    'name':usercred[0][1],
+                    'email':usercred[0][1],
                     'pic':usercred[0][2],
-                    'type':usercred[0][3],'Description':usercred[0][4],'City':usercred[0][5]
+                    'type':usercred[0][3],'Description':usercred[0][4],'locationId':usercred[0][5]
 
                 }
     return i;
