@@ -64,7 +64,6 @@ def signup():
         conn=mysql.connect()
         dbcursor = conn.cursor()
         dbcursor.callproc('sp_createUser',(content['name'],content['email'],_hashed_password,content['type']))
-        
         user_id = dbcursor.fetchall()
         if not isinstance(user_id[0][0],Number):
             return json.dumps({'error':'USERNAME_TAKEN'})
@@ -110,16 +109,16 @@ def updatepassword():
         content = request.get_json(silent=True)
         conn=mysql.connect()
         dbcursor = conn.cursor();
-        dbcursor.callproc('sp_getPassword',(1,0,0))
+        dbcursor.callproc('sp_getPassword',(session['uid'],0,0))
         dbcursor.execute('SELECT @_sp_getPassword_1,@_sp_getPassword_2') 
-        result = dbcursor.fetchone() 
+        result = dbcursor.fetchone()
         #return json.dumps({'message':result})
         if check_password_hash(result[0], content['oldpassword']):
             pass
         else:
             return json.dumps({'Error':'PASSWORD_INCORRECT'})
         _hashed_password = generate_password_hash(str(content['newpassword']))
-        dbcursor.callproc('sp_updatePassword',(1,_hashed_password))
+        dbcursor.callproc('sp_updatePassword',(session['uid'],_hashed_password))
         data = dbcursor.fetchall()
         if len(data) is 0:
             conn.commit()
@@ -137,7 +136,7 @@ def updateuserdetails():
         content = request.get_json(silent=True)
         conn=mysql.connect()
         dbcursor = conn.cursor();
-        dbcursor.callproc('sp_updateUserDetails',(1,content['desc'],str(content['locationId'])))
+        dbcursor.callproc('sp_updateUserDetails',(session['uid'],content['desc'],str(content['locationId'])))
         data = dbcursor.fetchall()
         if len(data) is 0:
             conn.commit()
