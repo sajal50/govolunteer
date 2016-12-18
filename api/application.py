@@ -65,6 +65,7 @@ def signup():
             conn.commit()
             content['uid']=user_id[0][0]
             session['uid']=user_id[0][0]
+            content['password']=''
             return json.dumps(content)
         else:
             return json.dumps({'error':str(user_id[0])})
@@ -260,9 +261,7 @@ def getallevent():
        dbcursor = conn.cursor();
        orgid=1
        dbcursor.callproc('sp_getEvents',(orgid,))
-       #return json.dumps({'message':'Works'})
        allevents = dbcursor.fetchall()
-       #return json.dumps({'message':'Works'})
        items_list1=[]
        if len(allevents) is 0:
                 return json.dumps({'message':'No Events Present'})
@@ -295,11 +294,7 @@ def userpostget():
        dbcursor = conn.cursor();
        userid=1
        dbcursor.callproc('sp_getUserPosts',(userid,))
-       #return json.dumps({'message':'Works'})
        allPosts = dbcursor.fetchall()
-       #print len(allPosts)
-       #return json.dumps(allPosts)
-       #return json.dumps({'message':'Works'})
        items_list1=[]
        if len(allPosts) == 0:
           return json.dumps([])
@@ -346,7 +341,7 @@ def modeluser(usercred):
                     'username':usercred[0][1],
                     'emailid':usercred[0][1],
                     'pic':usercred[0][2],
-                    'UserType':usercred[0][3],'Description':usercred[0][4],'City':usercred[0][5]
+                    'type':usercred[0][3],'Description':usercred[0][4],'City':usercred[0][5]
 
                 }
     return i;
@@ -357,7 +352,7 @@ def modelusersignin(usercred):
                     'name':str(usercred[0][1]),
                     'email':str(usercred[0][2]),
                     'pic':str(usercred[0][4]),
-                    'usertype':int(usercred[0][5]),'desc':str(usercred[0][6]),'locationId':usercred[0][7]
+                    'type':int(usercred[0][5]),'desc':str(usercred[0][6]),'locationId':usercred[0][7]
 
                 }
     return i;
