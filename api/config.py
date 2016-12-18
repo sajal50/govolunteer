@@ -1,2 +1,5 @@
-ES = "https://search-withgeoloc-j2h2ngharygpcqlpjpeqrc2mta.us-west-1.es.amazonaws.com"
+MYSQL_DATABASE_USER = 'root'
+MYSQL_DATABASE_PASSWORD = 'password'
+MYSQL_DATABASE_DB = 'govol'
+MYSQL_DATABASE_HOST = 'localhost'
 BUCKET="govol1"

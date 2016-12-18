@@ -23,10 +23,10 @@ CORS(app,supports_credentials = True)
 s3 = boto3.client('s3')
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'govol'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = Config.MYSQL_DATABASE_USER
+app.config['MYSQL_DATABASE_PASSWORD'] = Config.MYSQL_DATABASE_PASSWORD
+app.config['MYSQL_DATABASE_DB'] = Config.MYSQL_DATABASE_DB
+app.config['MYSQL_DATABASE_HOST'] = Config.MYSQL_DATABASE_HOST
 mysql = MySQL(app)
 '''mysql.init_app(app)'''
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
