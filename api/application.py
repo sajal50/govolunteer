@@ -17,6 +17,7 @@ app = application
 CORS(app,supports_credentials = True)
 #mysql = MySQL()
 
+s3 = boto3.client('s3')
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -333,8 +334,39 @@ def approveactivity():
     content=request.get_json(silent=True);
     conn=mysql.connect()
     dbcursor = conn.cursor();
-    dbcursor.callproc('sp_',(content['userId'],content['Title'],content['Description'],content['StartDate'],content['EndDate'],content['Tstamp'],content['CityId'],content['Category']))
+    dbcursor.callproc('sp_acceptReject',(content['postId'],content['activityId']))
+    allrequests = dbcursor.fetchall()
+    for req in allrequests:
+      dbcursor.callproc('sp_updateFeasibleUser',(req[1],req[2]))
+      allrequests = dbcursor.fetchall()
+    return json.dumps({'message':'Works'})
    except Exception as e:
+       return json.dumps({'message':'Error1'+str(e)})
+
+@app.route ('/api/sns', methods=['POST'])
+def sns():
+    try:
+      f = request.files['pic']
+      m = hashlib.md5()
+      m. update(f.filename + str(time.time()))
+      hashFileName = m.hexdigest()
+      hashFileName = hashFileName + f.filename
+
+      s3.upload_fileobj(f, "govol", hashFileName)
+      url_with_query = s3.generate_presigned_url(
+          ClientMethod='get_object',
+          Params={
+              'Bucket': 'govol',
+              'Key': hashFileName
+          }
+      )
+      url = url_with_query.split('?', 1)[0]
+      conn=mysql.connect()
+      dbcursor = conn.cursor();
+      dbcursor.callproc('sp_updatePicUrl',(session['uid'],url))
+      allrequests = dbcursor.fetchall()
+      return Response(json.dumps({"message" :url }), content_type='application/json')
+    except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
 
 
