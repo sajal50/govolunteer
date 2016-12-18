@@ -287,7 +287,7 @@ def getallevent():
                 if len(data1) is 0:
                     user=None
                 else:
-                    user=modeluser(data1)
+                    user=modeluserget(data1)
                 activity['user']=user
                 items_list2.append(activity)
             event['activities']=items_list2
@@ -343,6 +343,7 @@ def approveactivity():
     for req in allrequests:
       dbcursor.callproc('sp_updateFeasibleUser',(req[1],req[2]))
       allrequests = dbcursor.fetchall()
+    conn.commit()
     return json.dumps({'message':'Works'})
    except Exception as e:
        return json.dumps({'message':'Error1'+str(e)})
@@ -385,6 +386,17 @@ def modeluser(usercred):
                 }
     return i;
 
+def modeluserget(usercred):
+    i = {
+                    'uid':usercred[0][6],
+                    'name':usercred[0][0],
+                    'email':usercred[0][1],
+                    'pic':usercred[0][2],
+                    'type':usercred[0][3],'desc':usercred[0][4],'locationId':usercred[0][5]
+
+                }
+    return i;
+
 def modelusersignin(usercred):
     i = {
                     'uid':int(usercred[0][0]),
@@ -416,7 +428,8 @@ def modelactivity(eventdet):
                     'startTime':str(eventdet[2]),
                     'endTime':str(eventdet[3]),
                     'categoryId':int(eventdet[7]),
-                    'user':None
+                    'user':None,
+                    'status':int(eventdet[9])
 
                 }
     return i;
