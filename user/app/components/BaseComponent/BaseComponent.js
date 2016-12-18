@@ -42,10 +42,10 @@ class BaseComponent extends React.Component {
 		return (
 			<div >
 				<div styleName = 'base-header'>
-					<div>
+					<div styleName = 'logo-container'>
 						<img styleName = 'logo' src = {imageLogo} />
 					</div>
-					<div>
+					<div styleName = 'logout-container'>
 							{
 								(isLoggedIn) ? 
 									(<input type = 'button' 
@@ -56,10 +56,11 @@ class BaseComponent extends React.Component {
 
 							}
 					</div>
-				<NotificationSystem ref={(ref) => this.notificationRef = ref} />
+				
 				</div>
+				<NotificationSystem ref={(ref) => this.notificationRef = ref} />
 
-				<div className = 'col-xs-12'>
+				<div styleName = 'children'>
 
 					{this.props.children}
 

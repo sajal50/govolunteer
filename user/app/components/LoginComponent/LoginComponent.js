@@ -87,39 +87,56 @@ class LoginComponent extends React.Component {
 		}
 
 		return (
-			<div  className = 'col-md-12'>
+			<div>
 
-				<div className = 'col-xs-6 text-right'>
-					<div>
+				<div styleName="form">
+					<div id="login">   
+			          <h1 styleName ='welcome-back-text'>Welcome Back!</h1>
+			          
+			          <form>
+			          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Email Address<span styleName="req" >*</span>
+				            </label>
+				            	<input styleName='text-fields' autoComplete={'off'}
+				            	type='text' 
+								ref = {this.usernameRefSave} 
+								onKeyPress = {this._handleKeyPress} />
 
-						<strong>Email</strong>:
-					</div>
-					<div>
 
-						<strong>Password</strong>:
-					</div>
-				</div>
-				<div className = 'col-xs-6'>
+				        </div>
+				          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Password<span styleName="req" >*</span>
+				            </label>
+				            	<input 
+				            	styleName='text-fields' autoComplete={'off'}
+				            	type ='password' 
+								ref = {this.passwordRefSave}
+							 	onKeyPress = {this._handleKeyPress} />
 
-					<div>
+				        </div>
+				        <div styleName='gap-up'>
+				          <div styleName = 'gap'>
+					          <input type = 'button' onClick = {this.onClickOfLoginButton}
+					          styleName="button button-block" value = 'Log In'/>
+				          </div>
+				          <div styleName = 'gap'>
 
-					  <input type='text' 
-					ref = {this.usernameRefSave} 
-					onKeyPress = {this._handleKeyPress} />
-					</div>
-					<div>
-						  <input type ='password' 
-						 ref = {this.passwordRefSave}
-					 	onKeyPress = {this._handleKeyPress} />
-					</div>
-				</div>
-				<div styleName = 'buttons' className = 'col-xs-12 text-center'>
-					<input styleName = 'login' type = 'button' onClick = {this.onClickOfLoginButton}
-						className = 'btn btn-primary' value = 'Login' /> 
+					          <input styleName = 'new-user' type = 'button' onClick = {this.onClickOfGoToSignUp}
+								styleName="button button-block" value = 'New User' />
+							</div>
+						</div>
+			          </form>
 
-					<input styleName = 'new-user' type = 'button' onClick = {this.onClickOfGoToSignUp}
-						className = 'btn btn-primary' value = 'New User' />
-				</div>
+			        </div>
+			      
+				</div> 
+							
+
+
 			</div>
 
 
@@ -130,4 +147,4 @@ class LoginComponent extends React.Component {
 	}
 }
 
-export default CSSModules(LoginComponent, LoginStyle);
+export default CSSModules(LoginComponent, LoginStyle, {allowMultiple:true});

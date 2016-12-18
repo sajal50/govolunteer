@@ -117,6 +117,14 @@ export function login (email, password) {
 
 				} else {
 
+					if (json.error == "INCORRECT_PASSWORD") {
+
+						dispatch (triggerNotification({
+							message : 'Incorrect Crendentials',
+							level: 'error'
+						}));
+
+					}
 					if (json.error == "USER_DOES_NOT_EXIST") {
 
 						dispatch (triggerNotification({

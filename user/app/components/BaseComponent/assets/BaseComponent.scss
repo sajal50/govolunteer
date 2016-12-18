@@ -1,8 +1,8 @@
 .base-header {
-	border : 1px solid beige;
-	margin-bottom : 40px;
-	padding: 20px;
-	background-color : #cfdff9;
+	background-color : #13232f;
+	width: 100%;
+	height: 75px;
+	position:fixed;
 }
 
 .app-name {
@@ -11,8 +11,18 @@
 }
 
 .logo {
+	width : 200px;
 
-	height:20%;
-	width : 15%;
+}
+.logo-container {
+	float: left;
 
+}
+.logout-container{
+	float:right;
+	padding-right: 10px;
+    padding-top: 5px;
+}
+.children{
+	padding-top:75px;
 }

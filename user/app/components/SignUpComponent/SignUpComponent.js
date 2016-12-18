@@ -96,76 +96,104 @@ class SignUpComponent extends React.Component {
 	render () {
 		return (
 
-			<div  className = 'col-md-12'>
+			<div>
 
-				<div className = 'col-xs-6 text-right'>
-					<div styleName = 'label'>
+				<div styleName="form">
+					<div id="login">   
+			          <h1 styleName ='welcome-back-text'>Welcome to goVolunteer!</h1>
+			          
+			          <form>
+			          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Email Address<span styleName="req" >*</span>
+				            </label>
+							<input type='text'
+								styleName='text-fields' autoComplete={'off'} 
+								ref = {(ref) => this.usernameRefSave = ref} 
+								onKeyPress = {this._handleKeyPress} />
 
-						<strong>Email</strong>:
-					</div>
-					<div styleName = 'label'>
 
-						<strong>Name</strong>:
-					</div>
-					<div styleName = 'label'>
-
-						<strong>Password</strong>:
-					</div>
-					<div styleName = 'label'>
-
-						<strong>Re-Enter Password</strong>:
-					</div>
-					<div styleName = 'label'>
-
-						<strong>Are you an organization?</strong>:
-					</div>
-
-				</div>
-				<div className = 'col-xs-6'>
-
-					<div>
-
-					  <input type='text' 
-						ref = {(ref) => this.usernameRefSave = ref} 
-						onKeyPress = {this._handleKeyPress} />
-					</div>
-
-					<div>
-						  <input type ='text' 
+				        </div>
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Name<span styleName="req" >*</span>
+				            </label>
+							<input type ='text' 
+							styleName='text-fields' autoComplete={'off'}
 						 	ref = {(ref) => this.nameRefSave = ref}
 					 		onKeyPress = {this._handleKeyPress} />
-					</div>
-					
-					<div>
-						  <input type ='password' 
+
+
+				        </div>
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Password<span styleName="req" >*</span>
+				            </label>
+				            <input 
+				            styleName='text-fields' autoComplete={'off'}
+				            type ='password' 
 						 	ref = {(ref) => this.passwordRefSave = ref}
 					 		onKeyPress = {this._handleKeyPress} />
-					</div>
-					<div>
-						  <input type ='password' 
+
+
+				        </div>
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Re-type Password<span styleName="req" >*</span>
+				            </label>
+					 		<input type ='password' 
+					 		styleName='text-fields' autoComplete={'off'}
 						 	ref = {(ref) => this.passwordCopyRefSave = ref}
 					 		onKeyPress = {this._handleKeyPress} />
-					</div>
-					<div>
-						<input type="radio" name="typeOfSignUp" 
-                                   value="PERSON" 
-                                   checked= {this.state.checked == 'PERSON'}
-                                   onChange = {(e)=> this.onClickTypeChangeHandler(e)}
-                                   />No
-                        <input type="radio" name="typeOfSignUp" 
-                                   value="ORGANIZATION"
-                                   checked= {this.state.checked == 'ORGANIZATION'}
-                                   onChange = {(e) => this.onClickTypeChangeHandler(e)}
-                                    />Yes
-					</div>
-				</div>
-				<div styleName = 'buttons' className = 'col-xs-12 text-center'>
-					<input type = 'button' onClick = {this.onClickOfSignUButton}
-				  className = 'btn btn-primary' value = 'Sign Up' />
 
-					<input type = 'button' onClick = {()=> hashHistory.push('login')}
-				  className = 'btn btn-primary' value = 'Already a User' />
-				</div>
+
+				        </div>
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Are you an Organization<span styleName="req" >*</span>
+				            </label>
+				            <div>
+						 		<input type="radio" name="typeOfSignUp" 
+	                                   value="PERSON" 
+	                                   checked= {this.state.checked == 'PERSON'}
+	                                   onChange = {(e)=> this.onClickTypeChangeHandler(e)}
+								/>
+								<label styleName='labels-input radio-label'>
+									<span>No</span>
+					            </label>
+		                        <input type="radio" name="typeOfSignUp" 
+		                                   value="ORGANIZATION"
+		                                   checked= {this.state.checked == 'ORGANIZATION'}
+		                                   onChange = {(e) => this.onClickTypeChangeHandler(e)}
+		                                    />
+		                        <label styleName='labels-input radio-label'>
+					              <span>Yes</span>
+					            </label>
+	                        </div>
+
+
+				        </div>
+				          
+				        
+				          <div styleName = 'gap'>
+					          
+					          <input type = 'button' onClick = {this.onClickOfSignUButton}
+				  				styleName="button button-block" value = 'Sign Up' />
+				          </div>
+				          <div styleName = 'gap'>
+							
+							<input styleName = 'button button-block' type = 'button' onClick = {()=> hashHistory.push('login')}
+				  			value = 'Already a User' />
+							</div>
+			          </form>
+
+			        </div>
+			      
+				</div> 
+							
+
+
 			</div>
 
 
@@ -175,4 +203,4 @@ class SignUpComponent extends React.Component {
 	}
 }
 
-export default CSSModules(SignUpComponent, SignUpComponentStyles);
+export default CSSModules(SignUpComponent, SignUpComponentStyles, {allowMultiple:true});
