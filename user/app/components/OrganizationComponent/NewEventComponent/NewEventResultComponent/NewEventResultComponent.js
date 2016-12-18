@@ -21,7 +21,14 @@ class NewEventResultComponent extends React.Component {
 				<div key = {singleActivity.activityId}>
 
 					<div> Title : {singleActivity.title}</div>
-					<div> Requested : {singleActivity.user.username} </div>
+					{
+
+						(singleActivity.user) ? 
+
+						<div> Requested : {singleActivity.user.name} </div>
+						:
+						<div> Requested : Couldn't find a match. </div>
+					}
 					
 				</div>
 
