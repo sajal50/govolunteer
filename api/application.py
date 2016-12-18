@@ -268,7 +268,7 @@ def getallevent():
        allevents = dbcursor.fetchall()
        items_list1=[]
        if len(allevents) is 0:
-                return json.dumps({'message':'No Events Present'})
+                return json.dumps([])
        for row in allevents:
             event=modelevent(row)
             dbcursor.callproc('sp_getActivity',(event['eventid'],))
