@@ -3,6 +3,7 @@ import sys
 import os
 import json
 import time
+import datetime
 from numbers import Number
 import config as Config
 from flask import Flask
@@ -22,7 +23,7 @@ s3 = boto3.client('s3')
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'govol'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql = MySQL(app)
@@ -200,13 +201,13 @@ def searchbyfilter():
 @app.route('/api/userpost', methods=['POST'])
 def userpost():
    try:
-    if not request.json or not 'userId' in request.json:
+    if not request.json or not 'title' in request.json:
         return json.dumps({'message':'Error'})
     content=request.get_json(silent=True);
     #return json.dumps(content)
     conn=mysql.connect()
     dbcursor = conn.cursor();
-    dbcursor.callproc('sp_createPost',(content['userId'],content['Title'],content['Description'],content['StartDate'],content['EndDate'],content['Tstamp'],content['CityId'],content['Category']))
+    dbcursor.callproc('sp_createPost',(session['uid'],content['title'],content['desc'],content['startTime'],content['endTime'],None,content['locationId'],content['categoryId']))
     data = dbcursor.fetchall()
     if len(data) is 0:
         conn.commit()
@@ -214,7 +215,7 @@ def userpost():
     else:
         return json.dumps({'message':str(data[0])})
    except Exception as e:
-        return json.dumps({'message':'Error1'})
+        return json.dumps({'error1':str(e)})
 
 @app.route('/api/event', methods=['POST'])
 def newevent():
@@ -300,7 +301,7 @@ def userpostget():
    try:
        conn=mysql.connect()
        dbcursor = conn.cursor();
-       userid=1
+       userid=session['uid']
        dbcursor.callproc('sp_getUserPosts',(userid,))
        allPosts = dbcursor.fetchall()
        items_list1=[]
@@ -309,7 +310,7 @@ def userpostget():
        for row in allPosts:
           post=modelpost(row)
           if post['statusOfRequest']==0:
-            continue
+            post['requests']=None
           else:
             items_list2=[]
             dbcursor.callproc('sp_getAllDataForPost',(post['postId'],))
@@ -320,13 +321,12 @@ def userpostget():
               activity=modelactivityforpost(row)
               items_list2.append(activity)
             post['requests']=items_list2
-            items_list1.append(post)
-
+          items_list1.append(post)
             
        return json.dumps(items_list1)
             
    except Exception as e:
-         return json.dumps({'message':'Error1'+str(e)})
+         return json.dumps({'Error1':str(e)})
 
 
 
@@ -443,12 +443,12 @@ def modelactivityforpost(eventdet):
 
 def modelpost(postdet):
     i = {
-                    'postid':int(postdet[0]),
+                    'postId':int(postdet[0]),
                     'title':str(postdet[1]),
                     'desc':str(postdet[2]),
-                    'starttime':str(postdet[3]),
-                    'endtime':str(postdet[4]),
-                    'statusOfRequest':str(postdet[5]),
+                    'startTime':str(postdet[3]),
+                    'endTime':str(postdet[4]),
+                    'statusOfRequest':int(postdet[10]),
                     'requests':None
 
                 }
