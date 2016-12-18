@@ -23,7 +23,7 @@ s3 = boto3.client('s3')
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'govol'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql = MySQL(app)
@@ -310,7 +310,7 @@ def userpostget():
        for row in allPosts:
           post=modelpost(row)
           if post['statusOfRequest']==0:
-            post['requests']=None
+            post['requests']=[]
           else:
             items_list2=[]
             dbcursor.callproc('sp_getAllDataForPost',(post['postId'],))
