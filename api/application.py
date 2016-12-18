@@ -29,7 +29,7 @@ app.config['MYSQL_DATABASE_DB'] = Config.MYSQL_DATABASE_DB
 app.config['MYSQL_DATABASE_HOST'] = Config.MYSQL_DATABASE_HOST
 mysql = MySQL(app)
 '''mysql.init_app(app)'''
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+app.secret_key = Config.SECRET_KEY
 
 @app.route('/')
 @app.route('/index')
