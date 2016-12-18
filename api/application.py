@@ -126,8 +126,8 @@ def updatepassword():
             return json.dumps({'message':'Password updated successfully!'})
         else:
             return json.dumps({'message':str(data[0])})
-    except Exceptions as e:
-        return json.dumps({'message':'Error'})
+    except Exception as e:
+        return json.dumps({'message':str(e)})
 
 @app.route('/api/userdetails', methods=['POST'])
 def updateuserdetails():
@@ -144,8 +144,8 @@ def updateuserdetails():
             return json.dumps({'message':'User details updated successfully!'})
         else:
             return json.dumps({'message':str(data[0])})
-    except Exceptions as e:
-        return json.dumps({'message':'Error'})
+    except Exception as e:
+        return json.dumps({'message':str(e)})
 
 @app.route('/api/metadata', methods=['GET'])
 def metadata():
