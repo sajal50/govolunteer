@@ -45,9 +45,9 @@ export function createNewPost (payload) {
 
 			method :'POST',
 			headers: {
-				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				'Content-Type': 'application/json'
 			},
-			body: serialize(payload)
+			body: JSON.stringify(payload)
 		}).then((response) => {
 			return response.json();
 		}).then((json)=> {
@@ -84,9 +84,9 @@ export function acceptRequest (payload) {
 
 			method :'POST',
 			headers: {
-				'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				'Content-Type': 'application/json'
 			},
-			body: serialize(payload)
+			body: JSON.stringify(payload)
 		}).then((response) => {
 			return response.json();
 		}).then((json)=> {
