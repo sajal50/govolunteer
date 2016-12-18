@@ -22,9 +22,22 @@ class SingleEventDetailComponent extends React.Component {
 						Title : {singleActivity.title}
 					</div>
 					<div>
-						User Assigned : {singleActivity.user.username}
-						Status : {singleActivity.user.status}
+						Start time :  {singleActivity.startTime}
 					</div>
+					<div>
+						End time :  {singleActivity.endTime}
+					</div>
+					{
+						(singleActivity.user) ?
+						<div>
+							User Assigned : {singleActivity.user.name}
+							Status : {singleActivity.user.status}
+						</div>
+						:
+						<div>
+							User Assigned : No user assigned.
+						</div>
+					}
 				</div>
 
 				);
@@ -55,6 +68,12 @@ class SingleEventDetailComponent extends React.Component {
 				<div>
 					Description : {eventSelected.desc}
 					
+				</div>
+				<div>
+					Start time :  {eventSelected.startTime}
+				</div>
+				<div>
+					End time :  {eventSelected.endTime}
 				</div>
 				<div>
 					Activities : 
