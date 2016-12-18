@@ -377,8 +377,8 @@ def sns():
 
 def modeluser(usercred):
     i = {
-                    'uid':session['uid'],
-                    'name':usercred[0][1],
+                    'uid':int(usercred[0][7]),
+                    'name':usercred[0][0],
                     'email':usercred[0][1],
                     'pic':usercred[0][2],
                     'type':usercred[0][3],'desc':usercred[0][4],'locationId':usercred[0][5]
