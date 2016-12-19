@@ -16,6 +16,7 @@ from flask_cors import CORS, cross_origin
 import boto3
 import hashlib
 
+
 application = Flask(__name__)  
 app = application
 CORS(app,supports_credentials = True)
@@ -23,6 +24,8 @@ CORS(app,supports_credentials = True)
 
 s3 = boto3.client('s3')
 ses = boto3.client('ses')
+sqs = boto3.resource('sqs')
+queue = sqs.get_queue_by_name(QueueName=Config.SQS_QUEUE_NAME)
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = Config.MYSQL_DATABASE_USER
@@ -40,6 +43,7 @@ def index():
 
 @app.route('/api/getSession', methods=['GET'])
 def getSession():
+    print session
     if 'uid' not in session:
         return json.dumps({'error':'SESSION_DOES_NOT_EXIST'})
     conn=mysql.connect()
@@ -131,6 +135,7 @@ def updatepassword():
         #return json.dumps({'message1':data})
         if len(data) is 0:
             conn.commit()
+            pushToSQS(session['uid'],"PASSWORD_UPDATED")
             return json.dumps({'message':'Password updated successfully!'})
         else:
             return json.dumps({'message':str(data[0])})
@@ -149,6 +154,7 @@ def updateuserdetails():
         data = dbcursor.fetchall()
         if len(data) is 0:
             conn.commit()
+            pushToSQS(session['uid'],"USER_DETAILS_UPDATED")
             return json.dumps({'message':'User details updated successfully!'})
         else:
             return json.dumps({'message':str(data[0])})
@@ -285,8 +291,6 @@ def getallevent():
             event=modelevent(row)
             dbcursor.callproc('sp_getActivity',(event['eventId'],))
             allactivities = dbcursor.fetchall()
-            # if len(allactivities) is 0:
-            #     return json.dumps([])
             items_list2=[]
             for activity in allactivities:
                 activity=modelactivity(activity)
@@ -452,6 +456,29 @@ def resetpassword () :
       return Response(json.dumps({"error" : "INCORRECT_VERIFICATION_CODE" }), content_type='application/json')
   except Exception as e:
     return json.dumps({'error':str(e)})
+
+
+def pushToSQS(uid,action):
+  conn=mysql.connect()
+  dbcursor = conn.cursor();
+  dbcursor.callproc('sp_getUser',(uid,))
+  userData = dbcursor.fetchall()
+  user=modelusersignin(userData)
+  emailid=user['email']
+  name=user['name']
+  text='Dear '+name
+  if action=='PASSWORD_UPDATED':
+    text+="\n\nYour password has been updated recently."
+  elif action=='USER_DETAILS_UPDATED':
+    text+="\n\nYour account details have been updated recently."
+  message={
+    'to':emailid,
+    'text':text
+  }
+  temp=json.dumps(message)
+  print temp
+  response = queue.send_message(MessageBody=temp)
+
 
 def modeluser(usercred):
     i = {
