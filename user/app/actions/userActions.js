@@ -94,6 +94,11 @@ export function acceptRequest (payload) {
 
 
 			if (!json.error) {
+				dispatch(triggerNotification({
+					message : 'Activity Acceped.',
+					level : 'success'
+
+				}));
 				dispatch(fetchPosts());
 
 			}
