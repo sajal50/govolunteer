@@ -45,22 +45,27 @@ class ProfilePicUploadComponent extends React.Component {
 
 		return (
 			<div>
-	            <Dropzone multiple = {false} ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop}>
-                    <div>Try dropping some files here, or click to select files to upload.</div>
-                </Dropzone>
-                <button type="button" onClick={this.onOpenClick}>
-                    Open Dropzone
-                </button>
-                {this.state.files.length > 0 ? <div>
-                <h2>Uploading {this.state.files.length} files...</h2>
-                <div>{this.state.files.map((file, index) => <img key = {index} src={file.preview} /> )}</div>
-                <input type = 'button' className = 'btn btn-success' value = 'Upload' 
-                onClick = {() => this.onClickUploadFile()}/> 
-                </div> : null}
+                <div styleName = 'form'>
+
+    	            <Dropzone multiple = {false} ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop}>
+                        <label styleName = 'labels-input'>
+                            <div>Try dropping some files here, or click to select files to upload.</div>
+                        </label>
+                    </Dropzone>
+                    {this.state.files.length > 0 ? <div>
+                    <label styleName = 'labels-input'>
+                            <div>Preview of file.</div>
+                    </label>
+                    <div styleName = 'gap'>{this.state.files.map((file, index) => <img styleName = 'profile-pic-preview' key = {index} src={file.preview} /> )}</div>
+                    <input type = 'button'
+                    onClick = {()=> this.onClickUploadFile()}
+                    styleName = 'button button-block' value = 'Upload' />
+                    </div> : null}
+                </div>
                 
           	</div>
 			);
 	}
 }
 
-export default CSSModules(ProfilePicUploadComponent, ProfilePicUploadComponentStyle);
+export default CSSModules(ProfilePicUploadComponent, ProfilePicUploadComponentStyle, {allowMultiple:true});
