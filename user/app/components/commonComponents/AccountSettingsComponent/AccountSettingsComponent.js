@@ -63,7 +63,7 @@ class AccountSettingsComponent extends React.Component {
 		let propsToBePassed = this.getPropsToBePassed();
 		return (
 
-			<div>
+			<div styleName = 'account-management-container' >
 				<Nav bsStyle="tabs" justified activeKey={this.state.activeKey} onSelect={this.handleSelect}>
 		          <NavItem eventKey={1}> Update Password</NavItem>
 		          <NavItem eventKey={2}> Update Other Information</NavItem>
@@ -82,4 +82,4 @@ class AccountSettingsComponent extends React.Component {
 	}
 }
 
-export default CSSModules(AccountSettingsComponent, AccountSettingsComponentStyles);
+export default CSSModules(AccountSettingsComponent, AccountSettingsComponentStyles, {allowMultiple:true});

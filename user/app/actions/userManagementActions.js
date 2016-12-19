@@ -1,7 +1,5 @@
 import urlConstants from '../constants/urlConstants.js';
-import {serialize} from '../util/util.js';
 import actionConstants from '../constants/actionConstants.js';
-import {hashHistory} from 'react-router';
 import {triggerNotification} from './notificationActions.js';
 import {kfetch} from '../util/util.js';
 import request from 'superagent';

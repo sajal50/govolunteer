@@ -1,7 +1,6 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import PasswordUpdateComponentStyles from './assets/PasswordUpdateComponent.scss';
-import {hashHistory} from 'react-router';
 import _ from 'lodash';
 
 class PasswordUpdateComponent extends React.Component {
@@ -100,29 +99,59 @@ class PasswordUpdateComponent extends React.Component {
 	}
 	render () {
 			return (
-			<div  className = 'col-md-12'>
-				<div>
+			<div>
+				<div styleName="form">
+					<div id="login">   
+			          <h1 styleName ='welcome-back-text'>Update Password</h1>
+			          
+			          <form>
+			          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Old Password<span styleName="req" >*</span>
+				            </label>
+				            	<input styleName='text-fields' autoComplete={'off'}
+				            	type='password' 
+								ref = {(ref) => this.oldpasswordRefSave = ref} 
+								onKeyPress = {this._handleKeyPress} />
 
-					<strong>Old Password</strong>:  <input type='password' 
-					ref = {(ref) => this.oldpasswordRefSave = ref} 
-					onKeyPress = {this._handleKeyPress} />
-				</div>
-				<div>
-					<strong>New Password</strong>:  <input type ='password' 
-					 ref = {(ref) => this.newpasswordRefSave = ref}
-				 	onKeyPress = {this._handleKeyPress} />
-				</div>
 
-				<div>
-					<strong>Re-Enter New Password</strong>:  <input type ='password' 
-					 ref = {(ref) => this.newpasswordCopyRefSave = ref}
-				 	onKeyPress = {this._handleKeyPress} />
-				</div>
-				 <input type = 'button' onClick = {this.onClickOfUpdatePasswordButton}
-				  className = 'btn btn-primary' value = 'Update Password' />
-				  <br/>
-				  <br/>
+				        </div>
+				          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              New Password<span styleName="req" >*</span>
+				            </label>
+				            	<input 
+				            	styleName='text-fields' autoComplete={'off'}
+				            	type ='password' 
+								ref = {(ref) => this.newpasswordRefSave = ref}
+							 	onKeyPress = {this._handleKeyPress} />
 
+				        </div>
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Re-enter New Password<span styleName="req" >*</span>
+				            </label>
+				            	<input 
+				            	styleName='text-fields' autoComplete={'off'}
+				            	type ='password' 
+								ref = {(ref) => this.newpasswordCopyRefSave = ref}
+							 	onKeyPress = {this._handleKeyPress} />
+
+				        </div>
+				        <div styleName='gap-up'>
+				          <div styleName = 'gap'>
+				          		<input type = 'button' onClick = {this.onClickOfUpdatePasswordButton}
+				 				styleName="button button-block" value = 'Update Password' />
+				          </div>
+						</div>
+
+			          </form>
+
+			        </div>
+
+				</div>
 			</div>
 
 
@@ -132,4 +161,4 @@ class PasswordUpdateComponent extends React.Component {
 	}
 }
 
-export default CSSModules(PasswordUpdateComponent, PasswordUpdateComponentStyles);
+export default CSSModules(PasswordUpdateComponent, PasswordUpdateComponentStyles, {allowMultiple:true});

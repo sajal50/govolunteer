@@ -51,35 +51,53 @@ class PersonalInformationUpdateComponent extends React.Component {
 		let locations = this.getLocations();
 		return (
 			<div>
-				<div>
-					Description <br/><textarea value={this.state.desc} onChange={this.handleDescOnChange} />
+				<div styleName = 'personal-info-update-container' >
+					<div styleName = 'form'>
+						
+						<div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Description<span styleName="req" >*</span>
+				            </label>
+				            	<textarea styleName='textarea-field'
+				            	value={this.state.desc} onChange={this.handleDescOnChange}
+				            	/>
+				        </div>
+
+						<div styleName="field-wrap">
+							<label styleName='labels-input'>
+					              Location<span styleName="req" >*</span>
+					        </label>
+					        <div>
+							{
+								(this.state.locationId) ?
+								<select
+								value = {this.state.locationId}
+								onChange = {this.handleLocationOnChange}
+								ref = {(ref) => this.locationRef = ref} >
+									{locations}
+								</select> :
+
+								<select
+								onChange = {this.handleLocationOnChange}
+								ref = {(ref) => this.locationRef = ref} >
+									{locations}
+								</select>
+
+							}
+							</div>
+						</div>
+						<div styleName = 'gap'>
+							<input type = 'button' styleName = 'button button-block'
+					 			onClick = {() => this.onClickUpdate()} value = 'Update'/>
+						</div>
+					</div>
 				</div>
-				<div>
-					Location : <br/>
-					{
-						(this.state.locationId) ?
-						<select
-						value = {this.state.locationId}
-						onChange = {this.handleLocationOnChange}
-						ref = {(ref) => this.locationRef = ref} >
-							{locations}
-						</select> :
+				<div styleName = 'profile-pic-update-container'>
 
-						<select
-						onChange = {this.handleLocationOnChange}
-						ref = {(ref) => this.locationRef = ref} >
-							{locations}
-						</select>
-
-					}
-					
+					<ProfilePicUploadComponent 
+					accountManagementActions = {this.props.accountManagementActions}
+					/>
 				</div>
-
-				<input type='button' onClick = {() => this.onClickUpdate()} className = 'btn btn-success' value = 'Update' />
-
-				<ProfilePicUploadComponent 
-				accountManagementActions = {this.props.accountManagementActions}
-				/>
 			</div>
 
 
@@ -91,4 +109,4 @@ class PersonalInformationUpdateComponent extends React.Component {
 	}
 }
 
-export default CSSModules(PersonalInformationUpdateComponent, PersonalInformationUpdateComponentStyles);
+export default CSSModules(PersonalInformationUpdateComponent, PersonalInformationUpdateComponentStyles, {allowMultiple:true});
