@@ -23,8 +23,8 @@ CORS(app,supports_credentials = True)
 #mysql = MySQL()
 
 s3 = boto3.client('s3')
-ses = boto3.client('ses')
-sqs = boto3.resource('sqs')
+ses = boto3.client('ses',region_name='us-west-2')
+sqs = boto3.resource('sqs',region_name='us-west-2')
 queue = sqs.get_queue_by_name(QueueName=Config.SQS_QUEUE_NAME)
 
 # MySQL configurations

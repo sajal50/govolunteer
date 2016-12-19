@@ -8,7 +8,7 @@ import json
 import smtplib
 
 
-sqs = boto3.resource('sqs')
+sqs = boto3.resource('sqs', region_name='us-west-2')
 SQS_QUEUE_NAME=Config.SQS_QUEUE_NAME
 
 
