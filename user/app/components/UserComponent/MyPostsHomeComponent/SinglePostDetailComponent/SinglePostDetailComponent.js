@@ -1,6 +1,7 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import SinglePostDetailComponentStyle from './assets/SinglePostDetailComponent.scss';
+import _ from 'lodash';
 
 
 class SinglePostDetailComponent extends React.Component {
@@ -155,7 +156,7 @@ class SinglePostDetailComponent extends React.Component {
 		
 		 this.props.postActions.acceptRequest({
 		 	activityId: this.requestRef.value,
-		 	postId: this.props.postSelected.postId,
+		 	postId: this.props.postSelectedId,
 		 	response: '2'
 		 });
 
@@ -178,14 +179,16 @@ class SinglePostDetailComponent extends React.Component {
 	
 
 	render () {
-		let {postSelected} = this.props;
+		let {postSelectedId, posts} = this.props;
 
 
-		if (!postSelected) {
+		if (!postSelectedId) {
 			return (<div styleName = 'stiched'>Click on a post.</div>);
 		} else {
 
-			let viewForPosts = this.getViewForPosts (this.props.postSelected);
+			let postSelected = _.find(posts, function(singlePost) { return singlePost.postId == postSelectedId; });
+
+			let viewForPosts = this.getViewForPosts (postSelected);
 
 			return (
 			<div>

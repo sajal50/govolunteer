@@ -13,7 +13,7 @@ class MyPostsHomeComponent extends React.Component {
 
 		super(props);
 		 this.state = {
-		 	postSelected : null
+		 	postSelectedId : null
 		 };
 		 this.selectPost = this.selectPost.bind(this);
 	}
@@ -24,17 +24,17 @@ class MyPostsHomeComponent extends React.Component {
 
 	
 	 selectPost (postId) {
-	 	let {posts} = this.props.user;
 
-		let post = _.find(posts, function(singlePost) { return singlePost.postId == postId; });
-	 	this.setState ({
-	 		postSelected : post
+		this.setState ({
+	 		postSelectedId : postId
 	 	});
+	 	
 	 }
 
 	render () {
 		let {posts} = this.props.user;
 		//TODO - LOADING.. WILL COME while the posts are being fetched.
+
 		return (
 			<div styleName = 'myposts-home-container'>
 				<div styleName = 'clearfix'>
@@ -47,7 +47,7 @@ class MyPostsHomeComponent extends React.Component {
 					</div>
 					<div styleName = 'single-post-container' >
 
-						<SinglePostDetailComponent postSelected = {this.state.postSelected} postActions = {this.props.postActions}/>
+						<SinglePostDetailComponent postSelectedId = {this.state.postSelectedId} posts = {posts} postActions = {this.props.postActions}/>
 					</div>
 					
 
