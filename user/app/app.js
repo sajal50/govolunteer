@@ -9,6 +9,8 @@ import SignUpContainer from './containers/SignUpContainer/SignUpContainer.js';
 import OrganizationContainer from './containers/OrganizationContainer/OrganizationContainer.js';
 import UserContainer from './containers/UserContainer/UserContainer.js';
 import {loginCheck, orgCheck, userCheck} from './checks/checks.js';
+import ForgotPasswordContainer from './containers/ForgotPasswordContainer/ForgotPasswordContainer.js';
+import ResetPasswordContainer from './containers/ResetPasswordContainer/ResetPasswordContainer.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
@@ -21,6 +23,8 @@ ReactDOM.render(
 				<Route path = "signUp" component = {SignUpContainer} />
 				<Route onEnter = {orgCheck} path = "org/:childRoute" component = {OrganizationContainer} />
 				<Route onEnter = {userCheck} path = "user/:childRoute" component = {UserContainer} />
+				<Route path = 'forgotPassword' component = {ForgotPasswordContainer} />
+				<Route path = 'resetPassword' component = {ResetPasswordContainer} />
 			</Route>
 		</Router>
 

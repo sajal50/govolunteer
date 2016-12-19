@@ -126,3 +126,111 @@ export function updateProfilePic (file) {
 
 	}
 }
+
+export function sendEmailCode (emailId) {
+
+
+	return function (dispatch, getState) {
+
+		kfetch(urlConstants.sendVerificationCode, {
+
+					method :'POST',
+					headers: {
+						'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({emailId:emailId})
+				}).then((response) => {
+					return response.json();
+				}).then((json)=> {
+
+					if (!json.error) {
+
+						dispatch(triggerNotification({
+							message: "Email Sent",
+							level : "success"
+						}));
+
+
+
+					} else {
+
+							dispatch (triggerNotification({
+								message : 'Email not sent.',
+								level: 'error'
+							}));
+					}
+
+
+				}).catch(() => {
+
+				});
+
+	}
+
+}
+
+export function resetPassword (payload) {
+
+
+	return function (dispatch, getState) {
+
+		kfetch(urlConstants.resetpassword, {
+
+					method :'POST',
+					headers: {
+						'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(payload)
+				}).then((response) => {
+					return response.json();
+				}).then((json)=> {
+
+					if (!json.error) {
+
+						dispatch(triggerNotification({
+							message: "Password Reset",
+							level : "success"
+						}));
+
+
+
+					} else {
+						if (json.error == 'INCORRECT_USER') {
+							dispatch (triggerNotification({
+								message : 'No such user.',
+								level: 'error'
+							}));
+
+						} else if (json.error == 'NO_VERIFICATION_CODE') {
+
+							dispatch (triggerNotification({
+								message : 'No active verification code.',
+								level: 'error'
+							}));
+
+						} else if (json.error == 'INCORRECT_VERIFICATION_CODE') {
+
+							dispatch (triggerNotification({
+								message : 'Incorrect verification code.',
+								level: 'error'
+							}));
+
+						} else {
+
+							dispatch (triggerNotification({
+								message : 'Password not reset.',
+								level: 'error'
+							}));
+
+						}
+					}
+
+
+				}).catch(() => {
+
+				});
+
+	}
+
+}
+

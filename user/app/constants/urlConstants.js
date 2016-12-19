@@ -16,7 +16,9 @@ let urlConstants = () => {
 		"password": baseUrl + 'api/password',
 		"responsepost" : baseUrl + 'api/responsepost',
 		"userdetails" : baseUrl + 'api/userdetails',
-		"profilePic" : baseUrl + 'api/profilePic'
+		"profilePic" : baseUrl + 'api/profilePic',
+		"sendVerificationCode" : baseUrl + 'api/sendVerificationCode',
+		"resetpassword" : baseUrl + 'api/resetpassword'
 	};
 
 

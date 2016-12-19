@@ -22,6 +22,7 @@ CORS(app,supports_credentials = True)
 #mysql = MySQL()
 
 s3 = boto3.client('s3')
+ses = boto3.client('ses')
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = Config.MYSQL_DATABASE_USER
@@ -382,6 +383,75 @@ def profilePic():
     except Exception as e:
        return json.dumps({'error':str(e)})
 
+@app.route ('/api/sendVerificationCode', methods=['POST'])
+
+def sendVerificationCode():
+    try:
+      
+      content=request.get_json(silent=True);
+      conn=mysql.connect()
+      dbcursor = conn.cursor();
+      
+      m = hashlib.md5()
+      m. update(str(content['emailId']+str(time.time())))
+      verificationCode = m.hexdigest()
+      
+
+      dbcursor.callproc('sp_update_verification_code',(verificationCode,content['emailId']))
+      allrequests = dbcursor.fetchall()
+      conn.commit()
+      ses.send_email(
+        Source=Config.SEND_EMAIL_ID,
+        Destination={
+            'ToAddresses': [
+                content['emailId']
+            ]
+        },
+        Message={
+            'Subject': {
+                'Data': 'Verification code',
+            },
+            'Body': {
+                'Text': {
+                    'Data': 'Your verification code is ' + str(verificationCode),
+                }
+            }
+      })
+      return Response(json.dumps({"message" : "MAIL_SENT" }), content_type='application/json')
+    except Exception as e:
+      return json.dumps({'error':str(e)})
+
+@app.route ('/api/resetpassword', methods = ['POST'])
+
+def resetpassword () :
+
+  try:
+    content=request.get_json(silent=True);
+    conn=mysql.connect()
+    dbcursor = conn.cursor()
+    dbcursor.callproc('sp_fetch_verification_code',(content['emailId'],))
+    result = dbcursor.fetchall()
+    if (len(result) == 0) :
+      return Response(json.dumps({"error" : "INCORRECT_USER" }), content_type='application/json')
+    verificationCodeFromDB = result[0][0]
+    if verificationCodeFromDB == None :
+      return Response(json.dumps({"error" : "NO_VERIFICATION_CODE" }), content_type='application/json')
+
+    if verificationCodeFromDB == content['verificationCode'] :
+      newPassword = content ['newPassword']
+      _hashed_password = generate_password_hash(str(content['newPassword']))
+      dbcursor.callproc('sp_update_password_according_to_email',(_hashed_password, content['emailId']))
+      data = dbcursor.fetchall()
+      if len(data) is 0:
+        dbcursor.callproc('sp_update_verification_code',(None,content['emailId']))
+        conn.commit()
+        return json.dumps({'message':'Password updated successfully!'})
+      else:
+        return json.dumps({'message':str(data[0])})
+    else :
+      return Response(json.dumps({"error" : "INCORRECT_VERIFICATION_CODE" }), content_type='application/json')
+  except Exception as e:
+    return json.dumps({'error':str(e)})
 
 def modeluser(usercred):
     i = {

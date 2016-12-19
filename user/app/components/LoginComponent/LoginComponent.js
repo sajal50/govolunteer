@@ -132,11 +132,14 @@ class LoginComponent extends React.Component {
 			          </form>
 
 			        </div>
+			        <div onClick = {() => hashHistory.push('forgotPassword')} styleName = 'forgot-text'>
+						<span>Forgot your password? </span>
+					</div>
 			      
 				</div> 
 							
 
-
+				
 			</div>
 
 
