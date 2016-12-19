@@ -1,0 +1,26 @@
+.myposts-home-container{
+	padding: 10px;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.new-post-button {
+	float:right;
+	border:0;
+	outline:none;
+	border-radius:0;
+	padding:15px;
+	font-size:1rem;
+	font-weight:600;
+	text-transform:uppercase;
+	letter-spacing:.1em;
+	background-color:#22c13a;
+	color:#FFFFFF;
+	transition:all.5s ease;
+	-webkit-appearance: none;
+	&:hover, &:focus {
+	background-color:darken(#22c13a,5%);
+	}
+}

@@ -36,9 +36,9 @@ class MyPostsHomeComponent extends React.Component {
 		let {posts} = this.props.user;
 		//TODO - LOADING.. WILL COME while the posts are being fetched.
 		return (
-			<div>
-				<div>
-					<input onClick = {() => hashHistory.push('user/newpost')} className = 'btn btn-success'
+			<div styleName = 'myposts-home-container'>
+				<div styleName = 'clearfix'>
+					<input onClick = {() => hashHistory.push('user/newpost')} styleName = 'new-post-button'
 					 type = 'button' value = 'New Post' />
 				</div>
 				<br/>

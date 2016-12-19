@@ -43,7 +43,7 @@ class EventHomeComponent extends React.Component {
 		let {events} = this.props.org;
 		//TODO - LOADING.. WILL COME while the events are being fetched.
 		return (
-			<div styleName = 'event-home-container '>
+			<div styleName = 'event-home-container'>
 				<div styleName = 'clearfix'>
 					<input styleName = 'new-event-button' 
 					onClick = {() => hashHistory.push('org/new-event')}

@@ -50,10 +50,12 @@ class BaseComponent extends React.Component {
 								(isLoggedIn) ? 
 									(	<span>
 											{
-												(pic != 'None' || !pic) ?  
-													(<img styleName = 'profile-pic'
+												(pic!='None' || pic!=null ) ?
+												(null)
+													 : 
+												(<img styleName = 'profile-pic'
 													src = {pic}/>
-													) : (null)
+													) 
 											}
 											<span styleName = 'welcome-text'>
 												Welcome, {name}.

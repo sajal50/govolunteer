@@ -3,7 +3,6 @@ import CSSModules from 'react-css-modules';
 import NewPostFormComponentStyle from './assets/NewPostFormComponent.scss';
 import  './assets/datetime.css';
 import Datetime from 'react-datetime';
-import _ from 'lodash';
 import moment from 'moment';
 
 class NewPostFormComponent extends React.Component {
@@ -11,9 +10,6 @@ class NewPostFormComponent extends React.Component {
 	constructor (props) {
 
 		super(props);
-		// this.onDeleteClick = this.onDeleteClick.bind(this);
-		// this.globalCounter = 1;
-		// this.onChangeOfValue = this.onChangeOfValue.bind(this);
 		
 	}
 	
@@ -72,39 +68,87 @@ class NewPostFormComponent extends React.Component {
 
 		return (
 			<div>
-				<div>
-					Title : <br/><input type = 'text' ref = {(ref) => this.titleRef = ref}/>
+				<div styleName="form">
+					<div id="login">   
+			          <h3 styleName ='welcome-back-text'>New Post</h3>
+			          
+			          <form>
+			          
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Title<span styleName="req" >*</span>
+				            </label>
+				            	<input styleName='text-fields' autoComplete={'off'}
+				            	type = 'text' ref = {(ref) => this.titleRef = ref}/>
+				        </div>
+
+				        <div styleName="field-wrap">
+				            <label styleName='labels-input'>
+				              Description<span styleName="req" >*</span>
+				            </label>
+				            	<textarea styleName='textarea-field' ref = {(ref) => this.descRef = ref}/>
+				        </div>
+				        <div styleName="field-wrap">
+				       		<label styleName='labels-input'>
+				              Start Time<span styleName="req" >*</span>
+				            </label>
+							 <Datetime inputProps = {{className : "time"}}
+							 onChange = {(date) => this.startTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
+						</div>
+						<div styleName="field-wrap">
+							<label styleName='labels-input'>
+				              End Time<span styleName="req" >*</span>
+				            </label>
+
+							<Datetime inputProps = {{className : "time"}}
+							onChange = {(date) => this.endTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
+						</div>
+						<div styleName="field-wrap">
+							<label styleName='labels-input'>
+				              Location<span styleName="req" >*</span>
+				            </label>
+				            <div>
+				            	<select 
+								ref = {(ref) => this.locationRef = ref} >
+									{locationOptions}
+								</select>
+				            </div>
+
+						</div>
+						<div styleName="field-wrap">
+							<label styleName='labels-input'>
+				              Category<span styleName="req" >*</span>
+				            </label>
+				            <div>
+				            	<select 
+								ref = {(ref) => this.categoryRef = ref} >
+									{categoryOptions}
+								</select>
+				            </div>
+
+						</div>
+						
+						
+
+
+
+				        <div styleName='gap-up'>
+				          <div styleName = 'gap'>
+					          <input type = 'button' styleName = 'button button-block'
+					 			onClick = {() => this.onClickPost()} value = 'Post'/>
+				          </div>
+				          
+						</div>
+			          </form>
+
+			        </div>
+			      
 				</div>
-				<div>
-					Description : <br/><textarea ref = {(ref) => this.descRef = ref}/>
-				</div>
-				<div>
-					Start Time : <br/><Datetime  onChange = {(date) => this.startTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
-				</div>
-				<div>
-					End Time: <br/><Datetime onChange = {(date) => this.endTime = moment(date.toDate()).format('YYYY-MM-DD HH:mm:ss')} timeConstraints = {{minutes: { step: 30 }}} />
-				</div>
-				<div>
-					Category : <br/>
-					<select 
-					ref = {(ref) => this.categoryRef = ref} >
-						{categoryOptions}
-					</select>
-				</div>
-				<div>
-					Location : <br/>
-					<select 
-					ref = {(ref) => this.locationRef = ref} >
-						{locationOptions}
-					</select>
-				</div>
-				<div>
-					<input type = 'button'  className = 'btn btn-success'
-					 onClick = {() => this.onClickPost()} value = 'Post'/>
-				</div>
+
+				
 			</div>
 			);
 	}
 }
 
-export default CSSModules(NewPostFormComponent, NewPostFormComponentStyle);
+export default CSSModules(NewPostFormComponent, NewPostFormComponentStyle, {allowMultiple:true});

@@ -7,7 +7,8 @@ let initialState = () => {
 			"email" : null,
 			"isLoggedIn" : false,
 			"isLoggedInChecked" : false,
-			"type" : null
+			"type" : null,
+			"pic" : null
 		},
 		"notifConfig" : {
 			

@@ -58,12 +58,15 @@ class UserComponent extends React.Component {
 			let propsToBePassed = this.getPropsToBePassed();
 			return (
 
-				<div>
-					<div className = 'col-xs-3'>
+				<div styleName= 'user-container'>
+					<div styleName = 'sidebar-container'>
 						<SidebarComponent/>
 					</div>
-					<div className = 'col-xs-9'>
+					
+					<div styleName='post-container'>
+
 						<ComponentToBeLoaded {...propsToBePassed}/>
+						
 					</div>
 
 
