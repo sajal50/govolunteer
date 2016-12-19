@@ -51,7 +51,7 @@ class BaseComponent extends React.Component {
 									(	<span>
 											{
 												(pic != 'None' || !pic) ?  
-													(<img 
+													(<img styleName = 'profile-pic'
 													src = {pic}/>
 													) : (null)
 											}
