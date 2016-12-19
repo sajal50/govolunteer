@@ -478,4 +478,4 @@ def modelpost(postdet):
 app.wsgi_app = ProxyFix(app.wsgi_app)  
 
 if __name__ == "__main__":
-    app.run(debug=True,threaded=4)
+    app.run(debug=True,threaded=True)
