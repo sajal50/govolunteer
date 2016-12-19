@@ -261,6 +261,8 @@ def newevent():
                 dbcursor.callproc('sp_createActivity',(None,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,content['locationId'],None,0))
             else:
                 user=modeluser(data1)
+                uid=user['uid']
+                pushToSQS(uid,"NOTIFY_USER")
                 activity['user']=user;
                 userids=activity['user']['uid']
                 dbcursor.callproc('sp_createActivity',(userids,activity['title'],activity['desc'],activity['categoryId'],activity['startTime'],activity['endTime'],eventid,content['locationId'],data1[0][6],0))
@@ -474,6 +476,8 @@ def pushToSQS(uid,action):
     text+="\n\nYour account details have been updated recently!"
   elif action=="PROFILE_PIC_UPDATED":
     text+="\n\nYour profile picture has been updated recently!"
+  elif action=="NOTIFY_USER":
+    text+="\n\nYou have been requested for volunteering. Please visit the portal!"    
   message={
     'to':emailid,
     'text':text
