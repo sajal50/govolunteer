@@ -122,7 +122,7 @@ def updatepassword():
         if check_password_hash(result[0], content['oldPassword']):
             pass
         else:
-            return json.dumps({'Error':'PASSWORD_INCORRECT'})
+            return json.dumps({'error':'PASSWORD_INCORRECT'})
         _hashed_password = generate_password_hash(str(content['newPassword']))
         dbcursor.callproc('sp_updatePassword',(session['uid'],_hashed_password))
 
