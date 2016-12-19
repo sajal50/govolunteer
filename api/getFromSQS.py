@@ -17,13 +17,13 @@ def getFromSQS():
 	for message in queue.receive_messages():
 		msg = json.loads(message.body)
         if msg is not None :
-            #print msg['to']
-            #print msg['text']
+            print msg['to']
+            print msg['text']
             try:
                 server = smtplib.SMTP('smtp.gmail.com', 587)
                 server.starttls()
-                server.login(Config.EMAIL_ID, Config.EMAIL_ID_PASSWORD)
-                server.sendmail(Config.EMAIL_ID, msg['to'], msg['text'])
+                x=server.login(Config.EMAIL_ID, Config.EMAIL_ID_PASSWORD)
+                z=server.sendmail(Config.EMAIL_ID, msg['to'], msg['text'])
                 server.quit()
             except Exception as e:
                 return json.dumps({'error':str(e)})

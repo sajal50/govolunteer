@@ -383,6 +383,7 @@ def profilePic():
       dbcursor.callproc('sp_updatePicUrl',(session['uid'],url))
       allrequests = dbcursor.fetchall()
       conn.commit()
+      pushToSQS(session['uid'],"PROFILE_PIC_UPDATED")
       return Response(json.dumps({"pic" :url }), content_type='application/json')
     except Exception as e:
        return json.dumps({'error':str(e)})
@@ -468,9 +469,11 @@ def pushToSQS(uid,action):
   name=user['name']
   text='Dear '+name
   if action=='PASSWORD_UPDATED':
-    text+="\n\nYour password has been updated recently."
+    text+="\n\nYour password has been updated recently!"
   elif action=='USER_DETAILS_UPDATED':
-    text+="\n\nYour account details have been updated recently."
+    text+="\n\nYour account details have been updated recently!"
+  elif action=="PROFILE_PIC_UPDATED":
+    text+="\n\nYour profile picture has been updated recently!"
   message={
     'to':emailid,
     'text':text
