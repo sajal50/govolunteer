@@ -21,7 +21,7 @@ class SingleEventDetailComponent extends React.Component {
 
 			return (
 
-				<div key = {singleActivity.activityId}>
+				<div styleName = 'single-activity' key = {singleActivity.activityId}>
 					<div>
 						Title : {singleActivity.title}
 					</div>
@@ -40,7 +40,7 @@ class SingleEventDetailComponent extends React.Component {
 							</div>
 							<div>
 
-								Status : {singleActivity.status}
+								Status : {(singleActivity.status == 1) ? 'Accepted' : 'Pending' }
 							</div>
 						</div>
 						:
@@ -61,42 +61,6 @@ class SingleEventDetailComponent extends React.Component {
 
 	render () {
 
-		// let {eventSelected} = this.props;
-
-		// if (!eventSelected) {
-		// 	return (<div>Click on an event.</div>);
-		// } else {
-
-		// 	let viewForActivities = this.getViewForActivities (this.props.eventSelected.activities);
-
-		// 	return (
-		// 	<div>
-		// 		<div>
-		// 			Title : {eventSelected.title}
-
-		// 		</div>
-		// 		<div>
-		// 			Description : {eventSelected.desc}
-					
-		// 		</div>
-		// 		<div>
-		// 			Start time :  {eventSelected.startTime}
-		// 		</div>
-		// 		<div>
-		// 			End time :  {eventSelected.endTime}
-		// 		</div>
-		// 		<div>
-		// 			Activities : 
-
-		// 			{viewForActivities}
-					
-		// 		</div>
-
-		// 	</div>
-		// 	);
-
-
-		// }
 		let {eventSelected} = this.props;
 		if (eventSelected) {
 
@@ -104,33 +68,60 @@ class SingleEventDetailComponent extends React.Component {
 
 
 		return (
-			<Modal show = {this.props.showDetailsModal} 
+			<Modal dialogClassName="event-detail-modal" show = {this.props.showDetailsModal} 
 			bsSize="large" aria-labelledby="contained-modal-title-lg"
 			onHide={()=> this.props.closeDetailsModal()}>
 		        <Modal.Header closeButton>
 		          <Modal.Title id="contained-modal-title-lg">Event Details</Modal.Title>
 		        </Modal.Header>
 		        <Modal.Body>
-		        	<div>
-					Title : {eventSelected.title}
 
-					</div>
-					<div>
-						Description : {eventSelected.desc}
-						
-					</div>
-					<div>
-						Start time :  {eventSelected.startTime}
-					</div>
-					<div>
-						End time :  {eventSelected.endTime}
-					</div>
-					<div>
-						Activities : 
+		        		<div styleName = 'single-item'>
 
-						{viewForActivities}
-						
-					</div>
+				        	<label styleName ='labels-input'>
+				        		Title
+				        	</label>
+				        	<div>
+				        		{eventSelected.title}
+			        		</div>
+			        	</div>
+			        	<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Description
+				        	</label>
+				        	<div>
+				        		{eventSelected.desc}
+			        		</div>
+			        	</div>
+			        	<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Start Time
+				        	</label>
+				        	<div>
+				        		{eventSelected.startTime}
+			        		</div>
+			        	</div>
+			        	<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		End Time
+				        	</label>
+				        	<div>
+				        		{eventSelected.endTime}
+			        		</div>
+			        	</div>
+
+			        	<div styleName = 'single-item-without-border'>
+
+				        	<label styleName ='labels-input'>
+				        		Activities
+				        	</label>
+				        	<div>
+				        		{viewForActivities}
+			        		</div>
+			        	</div>
 		        </Modal.Body>
 		        <Modal.Footer>
 		          <Button onClick={()=> this.props.closeDetailsModal()}>Close</Button>
