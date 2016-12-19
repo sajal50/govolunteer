@@ -18,7 +18,7 @@ class NewEventResultComponent extends React.Component {
 
 
 			return (
-				<div key = {singleActivity.activityId}>
+				<div styleName ='single-activity' key = {singleActivity.activityId}>
 
 					<div> Title : {singleActivity.title}</div>
 					{
@@ -48,24 +48,62 @@ class NewEventResultComponent extends React.Component {
 		let activitiesView = this.activitiesView();
 		return (
 			<div>
-				Your event has been created.
-				<div>
-					title : {title}
-				</div>
-				<div>
-					desc : {desc}
-				</div>
-				<div>
-					startTime : {startTime}
-				</div>
-				<div>
-					endTime : {endTime}
-				</div>
+				<div styleName="form">
+					<div id="login">   
+			          <h1 styleName ='welcome-back-text'>Your event has been created!</h1>
+			          
+			          <form>
+			          	<div styleName = 'single-item'>
 
-				<div>
-					And the requests have been sent for the following activities.
-					{activitiesView}
-				</div>
+				        	<label styleName ='labels-input'>
+				        		Title
+				        	</label>
+				        	<div styleName = 'detail'>
+				        		{title}
+			        		</div>
+			        	</div>
+			        	<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Description
+				        	</label>
+				        	<div styleName = 'detail'>
+				        		{desc}
+			        		</div>
+			        	</div>
+			        	<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Start Time
+				        	</label>
+				        	<div styleName = 'detail'>
+				        		{startTime}
+			        		</div>
+			        	</div>
+			        	<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		End Time
+				        	</label>
+				        	<div styleName = 'detail'>
+				        		{endTime}
+			        		</div>
+			        	</div>
+
+			        	<div styleName = 'single-item-without-border'>
+
+				        	<label styleName ='labels-input'>
+				        		Activities
+				        	</label>
+				        	<div styleName = 'detail'>
+				        		{activitiesView}
+			        		</div>
+			        	</div>
+			          </form>
+
+			        </div>
+			      
+				</div> 
 				
 
 			</div>
@@ -73,4 +111,4 @@ class NewEventResultComponent extends React.Component {
 	}
 }
 
-export default CSSModules(NewEventResultComponent, NewEventResultComponentStyle);
+export default CSSModules(NewEventResultComponent, NewEventResultComponentStyle, {allowMultiple:true});
