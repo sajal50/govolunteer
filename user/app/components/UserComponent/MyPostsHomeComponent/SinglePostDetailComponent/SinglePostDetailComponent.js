@@ -13,38 +13,79 @@ class SinglePostDetailComponent extends React.Component {
 	getViewForPosts (singlePost) {
      		let viewForRequests=this.getViewForRequests(singlePost.requests);
 			let requestOptions = this.getRequestOptions(singlePost.requests);
-
 			return (
 
-				<div key = {singlePost.postId}>
-					<div>
-						Title : {singlePost.title}
-					</div>
-					<div>
-						Description : {singlePost.desc}
-					</div>
-					<div>
-						Start Time : {singlePost.startTime}
-					</div>
-					<div>
-						End Time : {singlePost.endTime}
-					</div>
-					<div>
-						Requests : <div>{viewForRequests}</div>
+				<div styleName = 'form' key = {singlePost.postId}>
+					<div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Title
+				        	</label>
+				        	<div>
+				        		{singlePost.title}
+			        		</div>
+			        </div>
+			        <div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Description
+				        	</label>
+				        	<div>
+				        		{singlePost.desc}
+			        		</div>
+			        </div>
+			        <div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		Start Time
+				        	</label>
+				        	<div>
+				        		{singlePost.startTime}
+			        		</div>
+			        </div>
+			        <div styleName = 'single-item'>
+
+				        	<label styleName ='labels-input'>
+				        		End Time
+				        	</label>
+				        	<div>
+				        		{singlePost.endTime}
+			        		</div>
+			        </div>
+
+					<div styleName = 'single-item-without-border'>
+						<label styleName ='labels-input'>
+				        		Requests
+				        </label>
+						
+						<div>{viewForRequests}</div>
 					</div>
 
 					<br/>
-					<div>
-					Select a request to accept : <br/>
-					<select 
-						ref = {(ref) => this.requestRef = ref} >
-						{requestOptions}
-					</select>
-					</div>
-					<div>
-					<input type = 'button'  className = 'btn btn-success'
-					 onClick = {() => this.onClickAcceptRequest()} value = 'Accept'/>
-					</div>
+					{
+
+						(singlePost.statusOfRequest == 0 || singlePost.statusOfRequest == 2) ?
+						(null):
+						(<div>
+							<div>
+							Select a request <br/>
+							<select styleName = 'org-options' 
+								ref = {(ref) => this.requestRef = ref} >
+								{requestOptions}
+							</select>
+							</div>
+							<div>
+								<input type = 'button'  styleName='accept-button '
+								 onClick = {() => this.onClickAcceptRequest()} value = 'Accept'/>
+							 </div>
+						</div>)
+						
+
+
+					}
+
+						
+
 				</div>
 
 				);
@@ -56,30 +97,48 @@ class SinglePostDetailComponent extends React.Component {
 		return posts.map ((singleRequest)=>{
 
 			return (
-				<div key = {singleRequest.activity.activityId}>
+				<div styleName = 'single-activity' key = {singleRequest.activity.activityId}>
 					<div>
-						Event Title : {singleRequest.title} 
+						<label styleName ='labels-input request-label'>
+						Event
+						</label>
+						{singleRequest.title} 
 					</div>
 					<div>
-						Event Description : {singleRequest.desc} 
+						<label styleName ='labels-input request-label'>
+						Requesting Organization
+						</label>
+						{singleRequest.username} 
 					</div>
 					<div>
-						Requesting User : {singleRequest.username} 
+						<label styleName ='labels-input request-label'>
+						Activity Title
+						</label>
+						{singleRequest.activity.title} 
 					</div>
 					<div>
-						Activity Title : {singleRequest.activity.title} 
+						<label styleName ='labels-input request-label'>
+						Activity Description
+						</label>
+						{singleRequest.activity.desc} 
 					</div>
 					<div>
-						Activity Description : {singleRequest.activity.desc} 
+						<label styleName ='labels-input request-label'>
+						Activity Start Time
+						</label>
+						{singleRequest.activity.startTime} 
 					</div>
 					<div>
-						Activity Start Time : {singleRequest.activity.startTime} 
+						<label styleName ='labels-input request-label'>
+						Activity End Time 
+						</label>
+						{singleRequest.activity.endTime} 
 					</div>
 					<div>
-						Activity End Time : {singleRequest.activity.endTime} 
-					</div>
-					<div>
-						Request Status : {singleRequest.statusOfRequest}
+						<label styleName ='labels-input request-label'>
+						Request Status
+						</label>
+						{(singleRequest.statusOfRequest == 1) ? <span>Accepted</span> : <span>Pending</span> }
 					</div>
 					
 					
@@ -123,7 +182,7 @@ class SinglePostDetailComponent extends React.Component {
 
 
 		if (!postSelected) {
-			return (<div>Click on a post.</div>);
+			return (<div styleName = 'stiched'>Click on a post.</div>);
 		} else {
 
 			let viewForPosts = this.getViewForPosts (this.props.postSelected);
@@ -141,4 +200,4 @@ class SinglePostDetailComponent extends React.Component {
 	}
 }
 
-export default CSSModules(SinglePostDetailComponent, SinglePostDetailComponentStyle);
+export default CSSModules(SinglePostDetailComponent, SinglePostDetailComponentStyle, {allowMultiple:true});

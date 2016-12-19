@@ -19,8 +19,13 @@ class AllPostsListComponent extends React.Component {
 
 			return (
 				<div onClick = {()=> this.props.selectPost(singlePost.postId)} 
-				styleName = 'single-box pointer' key = {singlePost.postId}>
-					Post : {singlePost.title} 
+				styleName = 'form pointer' key = {singlePost.postId}>
+					<label styleName='labels-input'>
+				              Post
+				    </label>
+				    <div styleName = 'text'>
+				    	{singlePost.title}
+				    </div>
 				</div>
 				);
 
@@ -34,6 +39,7 @@ class AllPostsListComponent extends React.Component {
 		let listView = this.getListView(this.props.posts);
 		return (
 			<div>
+				<h2> My Posts </h2>
 				{listView}
 			</div>
 			);

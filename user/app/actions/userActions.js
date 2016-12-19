@@ -94,8 +94,7 @@ export function acceptRequest (payload) {
 
 
 			if (!json.error) {
-				console.log(json);
-				fetchPosts();
+				dispatch(fetchPosts());
 
 			}
 

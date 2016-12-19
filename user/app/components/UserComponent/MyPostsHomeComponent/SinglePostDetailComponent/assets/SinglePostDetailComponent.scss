@@ -1,0 +1,95 @@
+.stiched {
+   padding: 20px;
+   margin: 10px;
+
+   font-size: 21px;
+   font-weight: bold;
+   line-height: 1.3em;
+   border: 2px dashed #fd3;
+   border-radius: 10px;
+   font-weight: normal;
+   height: 500px;
+   text-align : center;
+}
+
+$body-bg: #c1bdba;
+$form-bg: #13232f;
+$white: #ffffff;
+
+$main: #1ab188;
+$main-light: lighten($main,5%);
+$main-dark: darken($main,5%);
+
+$gray-light: #a0b3b0;
+$gray: #ddd;
+
+$thin: 300;
+$normal: 400;
+$bold: 600;
+$br: 4px;
+
+.form {
+  background:rgba($form-bg,.9);
+  padding: 40px;
+  max-width:600px;
+  margin:25px 40px 40px 40px;
+  border-radius:$br;
+  box-shadow:0 4px 10px 4px rgba($form-bg,.3);
+  color:#FFF;
+
+}
+
+.labels-input {
+
+
+   left:13px;
+   color:rgba(#FFFFFF,.5);
+   transition:all 0.25s ease;
+   -webkit-backface-visibility: hidden;
+   pointer-events: none;
+   font-size:18px;
+}
+
+.single-item {
+   margin-bottom: 5px;
+    border-bottom: 1px solid;
+    padding-bottom: 2px;
+}
+
+.single-activity {
+   margin-left: 20px;
+   border-bottom: 1px solid
+}
+.single-item-without-border {
+   margin-bottom: 5px;
+
+    padding-bottom: 2px;
+   
+}
+.request-label{
+  margin-right: 5px;
+  font-size: 15px;
+  line-height: 0px;
+}
+.org-options {
+  color:#000;
+}
+
+.accept-button {
+  margin-top: 5px;
+  border:0;
+  outline:none;
+  border-radius:0;
+  padding:15px;
+  font-size:1rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  background-color:#22c13a;
+  color:#FFFFFF;
+  transition:all.5s ease;
+  -webkit-appearance: none;
+  &:hover, &:focus {
+  background-color:darken(#22c13a,5%);
+  }
+}

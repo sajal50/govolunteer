@@ -41,12 +41,11 @@ class MyPostsHomeComponent extends React.Component {
 					<input onClick = {() => hashHistory.push('user/newpost')} styleName = 'new-post-button'
 					 type = 'button' value = 'New Post' />
 				</div>
-				<br/>
-					<div className = 'col-xs-4' >
+					<div styleName = 'all-posts-container'>
 						<AllPostsListComponent selectPost = {this.selectPost} posts = {posts} />
 
 					</div>
-					<div className = 'col-xs-8' >
+					<div styleName = 'single-post-container' >
 
 						<SinglePostDetailComponent postSelected = {this.state.postSelected} postActions = {this.props.postActions}/>
 					</div>
