@@ -9,6 +9,7 @@ import config as Config
 from flask import Flask
 from pprint import pprint
 from flask import Flask, request, render_template, g, redirect, Response, make_response, jsonify, url_for, session
+from werkzeug.contrib.fixers import ProxyFix
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
@@ -45,6 +46,7 @@ def getSession():
     dbcursor.callproc('sp_getUser',(session['uid'],))
     result = dbcursor.fetchall()
     newuser=modelusersignin(result)
+    conn.commit()
     return json.dumps(newuser)
 
 @app.route('/api/authz/logout', methods=['POST'])
@@ -471,7 +473,9 @@ def modelpost(postdet):
                     'requests':None
 
                 }
-    return i;    
+    return i;  
+
+app.wsgi_app = ProxyFix(app.wsgi_app)  
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,threaded=4)
