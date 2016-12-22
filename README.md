@@ -19,6 +19,7 @@ Install the following python modules -
 * `flask-mysql`
 * `flask_cors`
 * `boto3`
+* `botocore`
 
 Sync the `database/latest_er.mwb`, using MySQLWorkbench.
 
