@@ -1,6 +1,5 @@
 # goVolunteer
 
-
 To set up the project locally, make sure that **node** is installed on your system globally. Also make sure you have valid **mysql** installation.
 
 Install webpack - 
